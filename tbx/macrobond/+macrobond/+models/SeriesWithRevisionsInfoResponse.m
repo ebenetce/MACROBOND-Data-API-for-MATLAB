@@ -3,7 +3,7 @@ classdef SeriesWithRevisionsInfoResponse < macrobond.JSONMapper
 % 
 % SeriesWithRevisionsInfoResponse Properties:
 %   errorText - The error text if there was an error or not specified if there was no error - type: string
-%   errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
+%   errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  429 = QuotaExceeded (Quota exceeded)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
 %   storesRevisions - If True, a record of of updates of the series are stored - type: logical
 %   hasRevisions - If True, at least one update has been stored - type: logical
 %   timeStampOfFirstRevision - The timestamp of the first recorded update - type: datetime
@@ -19,7 +19,7 @@ classdef SeriesWithRevisionsInfoResponse < macrobond.JSONMapper
     properties
         % errorText - The error text if there was an error or not specified if there was no error - type: string
         errorText string { macrobond.JSONMapper.fieldName(errorText,"errorText")}
-        % errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
+        % errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  429 = QuotaExceeded (Quota exceeded)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
         errorCode  { macrobond.JSONMapper.fieldName(errorCode,"errorCode")}
         % storesRevisions - If True, a record of of updates of the series are stored - type: logical
         storesRevisions logical { macrobond.JSONMapper.fieldName(storesRevisions,"storesRevisions")}

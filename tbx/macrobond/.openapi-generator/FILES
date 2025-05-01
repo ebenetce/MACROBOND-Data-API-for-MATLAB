@@ -1,5 +1,6 @@
 +macrobond/+api/InHouseSeries.m
 +macrobond/+api/Metadata.m
++macrobond/+api/Release.m
 +macrobond/+api/Search.m
 +macrobond/+api/Series.m
 +macrobond/+api/SeriesTree.m
@@ -11,6 +12,7 @@
 +macrobond/+models/CalendarMergeMode.m
 +macrobond/+models/DataPackageListResponse.m
 +macrobond/+models/DataPackageListState.m
++macrobond/+models/DateTypeDefinedEntityRequest.m
 +macrobond/+models/EntityInfoForDisplayGroup.m
 +macrobond/+models/EntityInfoForDisplayItem.m
 +macrobond/+models/EntityInfoForDisplayItem_value.m
@@ -26,6 +28,9 @@
 +macrobond/+models/MetadataAttributeTypeRestriction.m
 +macrobond/+models/MetadataValueInformationResponse.m
 +macrobond/+models/MetadataValueInformationResponse_value.m
++macrobond/+models/ReleaseEntityResponse.m
++macrobond/+models/ReleaseEventItem.m
++macrobond/+models/ReleaseEventItemKind.m
 +macrobond/+models/ResponseErrorCode.m
 +macrobond/+models/RevisionHistoryRequest.m
 +macrobond/+models/SearchFilter.m
