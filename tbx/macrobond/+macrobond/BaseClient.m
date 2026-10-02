@@ -12,7 +12,7 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
     
     
     
-    properties (Access=private)
+    properties (Access=protected)
         % Base URI to use when calling the API. Allows using a different server
         % than specified in the original API spec.
         serverUri matlab.net.URI

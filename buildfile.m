@@ -21,8 +21,11 @@ end
 function archiveTask(~)
 % Create a Toolbox
 opts = matlab.addons.toolbox.ToolboxOptions("tbx", "5b3a40ff-8e75-4b28-a27e-cd99579c0427");
+if ~isMATLABReleaseOlderThan('R2026b')
+    opts.PackageName = 'MacrobondAPI';
+end
 opts.ToolboxName = 'Macrobond Data API';
-opts.ToolboxVersion = '0.1.0';
+opts.ToolboxVersion = '0.2.0';
 opts.AuthorCompany = 'MathWorks';
 opts.AuthorEmail = 'ebenetce@mathworks.com';
 opts.AuthorName = 'Eduard Benet Cerdà';
