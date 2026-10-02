@@ -343,7 +343,8 @@ classdef (Abstract) JSONMapper < handle
                     
                     for arrayIndex=1:N
                         curElement = json.get(arrayIndex-1);
-                        if curElement.has(propName)
+                        if curElement.has(propName) && ...
+                                ~curElement.get(propName).isJsonNull
                             % Store the value
                             vals(arrayIndex) = string(curElement.get(propName).getAsString);
                         else
@@ -410,7 +411,12 @@ classdef (Abstract) JSONMapper < handle
                             % it.
                             switch currProp.dataType
                                 case {?datetime}
-                                    val = arrayfun(currProp.dtConversionFunction,getScalarOrArray(curVal,'string'));
+                                    dateValues = getScalarOrArray(curVal,'string');
+                                    if isempty(currProp.dtConversionFunction)
+                                        val = arrayfun(@parseISO8601DateTime, dateValues);
+                                    else
+                                        val = arrayfun(currProp.dtConversionFunction, dateValues);
+                                    end
                                     obj(arrayIndex).(currProp.mName) = val;
                                 case {?single,?double}
                                     obj(arrayIndex).(currProp.mName) = getScalarOrArray(curVal,'double');
@@ -514,7 +520,11 @@ classdef (Abstract) JSONMapper < handle
                     switch currProp.dataType
                         case {?datetime}
                             dt = obj(arrayIndex).(currProp.mName);
-                            val = feval(currProp.dtConversionFunction,dt);
+                            if isempty(currProp.dtConversionFunction)
+                                val = formatISO8601DateTime(dt);
+                            else
+                                val = feval(currProp.dtConversionFunction,dt);
+                            end
                             jObject.add(currProp.jName,getJSONScalarOrArray(val,currProp.isArray));
                         case {?single,?double,...
                                 ?int8,?uint8,?int16,?uint16,?int32,?uint32,...
@@ -698,6 +708,14 @@ function val = getScalarOrArray(curVal,type,options)
 
     if options.doNotDecode
         val = curVal.toString();
+    elseif type == "double" && curVal.isJsonArray() && containsJsonNull(curVal)
+        val = nan(1,curVal.size());
+        for index = 1:curVal.size()
+            element = curVal.get(index-1);
+            if ~element.isJsonNull
+                val(index) = element.getAsDouble;
+            end
+        end
     else
         if curVal.isJsonArray()
             switch type
@@ -727,4 +745,35 @@ function val = getScalarOrArray(curVal,type,options)
     if type == "string"
         val = string(val);
     end
+end
+
+function tf = containsJsonNull(jsonArray)
+    tf = false;
+    for index = 1:jsonArray.size()
+        if jsonArray.get(index-1).isJsonNull
+            tf = true;
+            return
+        end
+    end
+end
+
+function out = parseISO8601DateTime(in)
+    if ismissing(in)
+        out = NaT(TimeZone="UTC");
+        return
+    end
+
+    try
+        out = datetime(in, ...
+            InputFormat="yyyy-MM-dd'T'HH:mm:ss.SSSXXX", TimeZone="UTC");
+    catch
+        out = datetime(in, ...
+            InputFormat="yyyy-MM-dd'T'HH:mm:ssXXX", TimeZone="UTC");
+    end
+end
+
+function out = formatISO8601DateTime(in)
+    in.TimeZone = "UTC";
+    in.Format = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    out = string(in);
 end

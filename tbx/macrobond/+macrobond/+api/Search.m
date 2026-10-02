@@ -180,7 +180,12 @@ classdef Search < macrobond.BaseClient
             if isfield(optionals, "noMetaData"), uri.Query(end+1) = matlab.net.QueryParameter("noMetaData", optionals.noMetaData); end
             if isfield(optionals, "allowLongResult"), uri.Query(end+1) = matlab.net.QueryParameter("allowLongResult", optionals.allowLongResult); end
             if isfield(optionals, "text"), uri.Query(end+1) = matlab.net.QueryParameter("text", optionals.text); end
-            uri.Query(end+1) = matlab.net.QueryParameter("filter", filter);
+            filterKeys = filter.keys;
+            for index = 1:numel(filterKeys)
+                key = filterKeys{index};
+                uri.Query(end+1) = matlab.net.QueryParameter( ...
+                    "filter[" + string(key) + "]", filter(key));
+            end
             
             % No JSON body parameters
 

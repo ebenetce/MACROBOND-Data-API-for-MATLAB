@@ -55,10 +55,17 @@ classdef JSONPropertyInfo < handle
                             'Property %s is defined as `datetime` but does not have a valid conversion function.',pm.Name);
                     end
                 else
-                    % If datetime, the first "attribute" must be the
-                    % type definition
+                    % If datetime, record an explicit conversion annotation
+                    % when one is present. Generated OpenAPI classes can
+                    % otherwise have fieldName as their first annotation.
                     if props(i).dataType == ?datetime
-                        props(i).dtConversionFunction = pm.Validation.ValidatorFunctions{1};
+                        dtIndex = find(contains(attrs, ...
+                            ["macrobond.JSONMapper.epochDatetime", ...
+                             "macrobond.JSONMapper.stringDatetime"]), 1);
+                        if ~isempty(dtIndex)
+                            props(i).dtConversionFunction = ...
+                                pm.Validation.ValidatorFunctions{dtIndex};
+                        end
                     end
                     % Check for JSONArray attribute
                     props(i).isArray = any(strcmp(attrs,'macrobond.JSONMapper.JSONArray'));
