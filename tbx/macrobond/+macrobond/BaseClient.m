@@ -12,6 +12,15 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
     
     
     
+    properties
+        Scopes = [...
+                        "macrobond_web_api.read_mb",... % Read entities from the Macrobond database
+                        "macrobond_web_api.search_mb",... % Search in the Macrobond database
+                        "macrobond_web_api.read_structure",... % Read database structure like the database tree
+                        "macrobond_web_api.write_ih",... % Create and update in-house time series
+                    ];
+    end
+
     properties (Access=protected)
         % Base URI to use when calling the API. Allows using a different server
         % than specified in the original API spec.
@@ -50,12 +59,6 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
         % httpOptions rather than through httpCredentials.
         httpCredentials = matlab.net.http.Credentials.empty;
 
-        Scopes = [...
-                        "macrobond_web_api.read_mb",... % Read entities from the Macrobond database
-                        "macrobond_web_api.search_mb",... % Search in the Macrobond database
-                        "macrobond_web_api.read_structure",... % Read database structure like the database tree
-                        "macrobond_web_api.write_ih",... % Create and update in-house time series
-                    ];
     end
 
     properties (Constant)
@@ -176,14 +179,14 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
                     opts = weboptions('MediaType','application/x-www-form-urlencoded');
                     resp = webwrite(tokenUrl, payload, opts);
                    
-                    if resp.token_type ~= "Bearer"
+                    if ~strcmpi(string(resp.token_type), "Bearer")
                         error('macrobond:BaseClient:invalidToken', 'token is not bearer')
                     end
 
-                    if isfield(res, 'expires_at')
-                        obj.expiresAt = int64(res.expires_at);
-                    elseif isfield(res, 'expires_in')
-                        obj.expiresAt = int64(posixtime(datetime('now'))) + int64(res.expires_in);
+                    if isfield(resp, 'expires_at')
+                        obj.expiresAt = int64(resp.expires_at);
+                    elseif isfield(resp, 'expires_in')
+                        obj.expiresAt = int64(posixtime(datetime('now'))) + int64(resp.expires_in);
                     else
                         error('macrobond:BaseClient:noexpiration', 'no expires_at or expires_in')
                     end
@@ -192,7 +195,8 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
                         error('macrobond:BaseClient:noaccesstoken', 'No access_token')
                     end
 
-                    obj.bearerToken = res.access_token;
+                    obj.bearerToken = resp.access_token;
+                    token = obj.bearerToken;
 
                 case "auth"
                     % Authorization Code flow

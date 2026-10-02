@@ -4,7 +4,7 @@ classdef OpenAPIMockTest < matlab.unittest.TestCase
     methods (Test, TestTags = "Contract")
         function metadataRequestUsesMockServer(testCase)
             mockServerUrl = string(getenv("OPENAPI_MOCK_URL"));
-            testCase.fatalAssertNotEmpty(mockServerUrl, ...
+            testCase.assumeGreaterThan(strlength(mockServerUrl), 0, ...
                 "Set OPENAPI_MOCK_URL to run the OpenAPI contract tests.");
 
             configFile = string(tempname) + ".json";

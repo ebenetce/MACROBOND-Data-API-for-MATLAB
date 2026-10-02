@@ -5,15 +5,17 @@ classdef MacrobondClient
     end
 
     properties (SetAccess = private)
+        InHouseSeries
         Metadata
+        Release
         Search
         Series
         SeriesTree
-        InHouseSeries        
+        SubscriptionList
     end
 
     methods
-        
+
         function obj = MacrobondClient(nvp)
 
             arguments
@@ -26,11 +28,13 @@ classdef MacrobondClient
             end
             obj.Scopes = nvp.scopes;
 
+            obj.InHouseSeries = macrobond.api.InHouseSeries(scopes = obj.Scopes);
             obj.Metadata = macrobond.api.Metadata(scopes = obj.Scopes);
+            obj.Release = macrobond.api.Release(scopes = obj.Scopes);
             obj.Search = macrobond.api.Search(scopes = obj.Scopes);
             obj.Series = macrobond.api.Series(scopes = obj.Scopes);
             obj.SeriesTree = macrobond.api.SeriesTree(scopes = obj.Scopes);
-            obj.InHouseSeries = macrobond.api.InHouseSeries(scopes = obj.Scopes);
+            obj.SubscriptionList = macrobond.api.SubscriptionList(scopes = obj.Scopes);
 
         end
 
