@@ -5,6 +5,7 @@
 +macrobond/+api/Series.m
 +macrobond/+api/SeriesTree.m
 +macrobond/+api/SubscriptionList.m
++macrobond/+models/AnnualUniqueSeriesConsumptionValue.m
 +macrobond/+models/AttributeFilter.m
 +macrobond/+models/AttributeFilterCollection.m
 +macrobond/+models/AttributeFilterValue.m
@@ -21,6 +22,7 @@
 +macrobond/+models/EntityRequest.m
 +macrobond/+models/EntityResponse.m
 +macrobond/+models/FreeFormObject.m
++macrobond/+models/GetUsageStatisticsResponse.m
 +macrobond/+models/ItemInformation.m
 +macrobond/+models/ItemListingResponse.m
 +macrobond/+models/MetadataAttributeInformationResponse.m
