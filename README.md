@@ -1,5 +1,8 @@
 # Macrobond Data API for MATLAB
 
+[![OpenAPI Contract Test](https://github.com/ebenetce/MACROBOND-Data-API-for-MATLAB/actions/workflows/openapi_contract_test.yml/badge.svg?branch=main)](https://ebenetce.github.io/MACROBOND-Data-API-for-MATLAB/results.html)
+[![coverage](https://img.shields.io/badge/dynamic/xml?url=https://ebenetce.github.io/MACROBOND-Data-API-for-MATLAB/coverage.xml&query=round%28//coverage/@line-rate%2A100%29&suffix=%25&label=coverage)](https://ebenetce.github.io/MACROBOND-Data-API-for-MATLAB/coverage.html)
+
 This toolbox provides a MATLAB interface to the
 [Macrobond Data API](https://help.macrobond.com/technical-information/the-macrobond-data-web-api-feed/).
 The generated client is refreshed from Macrobond's published

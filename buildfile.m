@@ -9,7 +9,11 @@ plan = buildplan(localfunctions);
 plan("check") = CodeIssuesTask;
 
 % Add the "test" task to run tests without adding the tests folder to path
-plan("test") = TestTask("tests", SourceFiles="tbx/macrobond");
+testTask = TestTask("tests", SourceFiles="tbx/macrobond", ...
+    TestResults="public/results.html");
+testTask = testTask.addCodeCoverage( ...
+    ["public/coverage.xml", "public/coverage.html"]);
+plan("test") = testTask;
 
 % Make the "archive" task the default task in the plan
 plan.DefaultTasks = "archive";

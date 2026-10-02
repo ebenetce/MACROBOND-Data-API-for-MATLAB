@@ -35,3 +35,6 @@ codegen/
 # buildtool cache folder
 .buildtool/
 
+# Test and coverage reports
+public/
+

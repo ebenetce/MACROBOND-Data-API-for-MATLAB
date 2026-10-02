@@ -100,7 +100,10 @@ classdef GeneratedApiContractTest < matlab.unittest.TestCase
 
         function getsSubscriptionListUpdates(testCase)
             client = macrobond.api.SubscriptionList(configFile=testCase.ConfigFile);
-            [code, result, response] = client.subscriptionlistGetupdatesGet(datetime("today"));
+            ifModifiedSince = datetime("2020-01-01T00:00:00Z", ...
+                InputFormat="yyyy-MM-dd'T'HH:mm:ss'Z'", ...
+                TimeZone="UTC", Format="yyyy-MM-dd'T'HH:mm:ss'Z'");
+            [code, result, response] = client.subscriptionlistGetupdatesGet(ifModifiedSince);
             disp(result)
 
             verifySuccessfulResponse(testCase, code, response);

@@ -127,7 +127,7 @@ classdef Search < macrobond.BaseClient
 
             arguments
               obj macrobond.api.Search
-              filter macrobond.models.macrobond.JSONMapperMap
+              filter macrobond.JSONMapperMap
               optionals.entityType string
               optionals.includeDiscontinued logical
               optionals.noMetaData logical

@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   OPENAPI_SPEC: https://api.macrobondfinancial.com/swagger/v1/swagger.json
   OPENAPI_MOCK_URL: http://127.0.0.1:4010
@@ -13,6 +16,8 @@ env:
 jobs:
   test-generated-client:
     runs-on: ubuntu-latest
+    outputs:
+      tests_passed: ${{ steps.run-tests.outcome == 'success' }}
 
     steps:
       - name: Checkout code
@@ -32,6 +37,45 @@ jobs:
         uses: matlab-actions/setup-matlab@v3
 
       - name: Run contract tests
+        id: run-tests
+        continue-on-error: true
         uses: matlab-actions/run-build@v3
         with:
           tasks: test
+
+      - name: Upload Pages artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: public/
+
+  deploy-pages:
+    needs: test-generated-client
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  fail-on-test-failure:
+    needs:
+      - test-generated-client
+      - deploy-pages
+    if: always() && needs.test-generated-client.outputs.tests_passed != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mark workflow as failed after Pages deploy
+        shell: bash
+        run: |
+          echo "Tests failed. Pages were published."
+          exit 1

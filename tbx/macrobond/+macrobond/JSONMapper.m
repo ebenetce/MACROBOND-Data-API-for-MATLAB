@@ -429,7 +429,11 @@ classdef (Abstract) JSONMapper < handle
                                     it = curVal.entrySet.iterator;
                                     while it.hasNext
                                         kv = it.next;
-                                        map(char(kv.getKey)) = char(kv.getValue.getAsString());
+                                        if kv.getValue.isJsonNull
+                                            map(char(kv.getKey)) = '';
+                                        else
+                                            map(char(kv.getKey)) = char(kv.getValue.getAsString());
+                                        end
                                     end
                                     obj(arrayIndex).(currProp.mName) = map;
                                 case {?macrobond.JSONMapperMap}
@@ -437,7 +441,11 @@ classdef (Abstract) JSONMapper < handle
                                     it = curVal.entrySet.iterator;
                                     while it.hasNext
                                         kv = it.next;
-                                        map(char(kv.getKey)) = char(kv.getValue.getAsString());
+                                        if kv.getValue.isJsonNull
+                                            map(char(kv.getKey)) = '';
+                                        else
+                                            map(char(kv.getKey)) = char(kv.getValue.getAsString());
+                                        end
                                     end
                                     obj(arrayIndex).(currProp.mName) = map;
                                 case {?meta.class} % freeform object, decode as struct
