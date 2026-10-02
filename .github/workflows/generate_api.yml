@@ -39,15 +39,19 @@ jobs:
           java-version: '11'
           cache: 'maven'
 
-      - name: Run Maven Package
+      - name: Build MATLAB OpenAPI generator
         run: |
           cd external-repo/Software/Java
           mvn -q clean package
+          echo "OPENAPI_GENERATOR_VERSION=$(mvn -q help:evaluate -Dexpression=openapi-generator-version -DforceStdout)" >> "$GITHUB_ENV"
 
       - name: Generate API
         run: |
           cd external-repo/Software
-          npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB -i ${{ env.OPENAPI_SPEC }} -o ${{ env.PACKAGE_NAME }} --package-name ${{ env.PACKAGE_NAME }} -p AddOAuth=auth
+          GENERATOR_JAR="$(find MATLAB/lib/jar -maxdepth 1 -name 'MATLAB-openapi-generator-*.jar' ! -name '*-tests.jar' -print -quit)"
+          test -n "$GENERATOR_JAR"
+          npx @openapitools/openapi-generator-cli version-manager set "$OPENAPI_GENERATOR_VERSION"
+          npx @openapitools/openapi-generator-cli --custom-generator "$GENERATOR_JAR" generate -g matlab-client -i "${{ env.OPENAPI_SPEC }}" -o "${{ env.PACKAGE_NAME }}" --package-name "${{ env.PACKAGE_NAME }}" -p AddOAuth=auth
 
       - name: Configure Git
         run: |    
