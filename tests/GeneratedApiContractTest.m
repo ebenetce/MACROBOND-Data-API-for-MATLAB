@@ -25,21 +25,24 @@ classdef GeneratedApiContractTest < matlab.unittest.TestCase
         function searchesEntities(testCase)
             client = macrobond.api.Search(configFile=testCase.ConfigFile);
             filter = macrobond.JSONMapperMap("Region", "US");
-            [code, ~, response] = client.searchEntitiesGet(filter);
+            [code, result, response] = client.searchEntitiesGet(filter);
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function suggestsSearchTerms(testCase)
             client = macrobond.api.Search(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.searchSearchsuggestionsGet("inflation");
+            [code, result, response] = client.searchSearchsuggestionsGet("inflation");
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function fetchesSeriesWithGet(testCase)
             client = macrobond.api.Series(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.seriesFetchseriesGet("usgdp");
+            [code, result, response] = client.seriesFetchseriesGet("usgdp");
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
@@ -47,7 +50,8 @@ classdef GeneratedApiContractTest < matlab.unittest.TestCase
         function fetchesSeriesWithPost(testCase)
             client = macrobond.api.Series(configFile=testCase.ConfigFile);
             request = macrobond.models.DateTypeDefinedEntityRequest(name="usgdp");
-            [code, ~, response] = client.seriesFetchseriesPost(request);
+            [code, result, response] = client.seriesFetchseriesPost(request);
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
@@ -56,49 +60,56 @@ classdef GeneratedApiContractTest < matlab.unittest.TestCase
             client = macrobond.api.Series(configFile=testCase.ConfigFile);
             entry = macrobond.models.UnifiedSeriesEntry(name="usgdp");
             request = macrobond.models.UnifiedSeriesRequest(seriesEntries=entry);
-            [code, ~, response] = client.seriesFetchunifiedseriesPost(request);
+            [code, result, response] = client.seriesFetchunifiedseriesPost(request);
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function getsFormattedSeriesInformation(testCase)
             client = macrobond.api.Series(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.seriesEntityinfofordisplayGet("usgdp");
+            [code, result, response] = client.seriesEntityinfofordisplayGet("usgdp");
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function getsMetadataAttributes(testCase)
             client = macrobond.api.Metadata(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.metadataGetattributeinformationGet("Region");
+            [code, result, response] = client.metadataGetattributeinformationGet("Region");
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function listsMetadataAttributeValues(testCase)
             client = macrobond.api.Metadata(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.metadataListattributevaluesGet("Region");
+            [code, result, response] = client.metadataListattributevaluesGet("Region");
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function getsSeriesTreeNodes(testCase)
             client = macrobond.api.SeriesTree(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.seriestreeGetnodesGet;
+            [code, result, response] = client.seriestreeGetnodesGet;
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function getsSubscriptionListUpdates(testCase)
             client = macrobond.api.SubscriptionList(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.subscriptionlistGetupdatesGet(datetime("today"));
+            [code, result, response] = client.subscriptionlistGetupdatesGet(datetime("today"));
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
 
         function getsUpcomingReleases(testCase)
             client = macrobond.api.Release(configFile=testCase.ConfigFile);
-            [code, ~, response] = client.releaseUpcomingreleasesGet("usgdp");
+            [code, result, response] = client.releaseUpcomingreleasesGet("usgdp");
+            disp(result)
 
             verifySuccessfulResponse(testCase, code, response);
         end
