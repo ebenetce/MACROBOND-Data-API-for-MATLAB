@@ -1,0 +1,37 @@
+name: OpenAPI Contract Test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  OPENAPI_SPEC: https://api.macrobondfinancial.com/swagger/v1/swagger.json
+  OPENAPI_MOCK_URL: http://127.0.0.1:4010
+
+jobs:
+  test-generated-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Start OpenAPI mock server
+        run: |
+          npx --yes @stoplight/prism-cli@5 mock "$OPENAPI_SPEC" --host 127.0.0.1 --port 4010 --dynamic > prism.log 2>&1 &
+          npx --yes wait-on@8 tcp:127.0.0.1:4010
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v3
+
+      - name: Run contract tests
+        uses: matlab-actions/run-build@v3
+        with:
+          tasks: test

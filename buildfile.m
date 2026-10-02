@@ -8,8 +8,8 @@ plan = buildplan(localfunctions);
 % Add the "check" task to identify code issues
 plan("check") = CodeIssuesTask;
 
-% Add the "test" task to run tests
-plan("test") = TestTask;
+% Add the "test" task to run tests without adding the tests folder to path
+plan("test") = TestTask("tests", SourceFiles="tbx/macrobond");
 
 % Make the "archive" task the default task in the plan
 plan.DefaultTasks = "archive";
