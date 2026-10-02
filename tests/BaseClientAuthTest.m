@@ -21,6 +21,16 @@ classdef BaseClientAuthTest < matlab.unittest.TestCase
             testCase.verifyError(@() client.authenticatedRequest("auth"), ...
                 "macrobond:UnknownOAuth");
         end
+
+        function publicConfigurationSelectsPreferredAuthMethod(testCase)
+            client = AuthTestClient( ...
+                serverUri="http://127.0.0.1:4010", ...
+                preferredAuthMethod="auth");
+
+            testCase.verifyError( ...
+                @() client.authenticatedRequest(["ClientDirectAccess", "auth"]), ...
+                "macrobond:UnknownOAuth");
+        end
     end
 end
 
