@@ -21,25 +21,25 @@ classdef MetadataAttributeInformationResponse < macrobond.JSONMapper
     % Class properties
     properties
         % name - The name of the metadata attribute - type: string
-        name string { macrobond.JSONMapper.fieldName(name,"name") }
+        name string { macrobond.JSONMapper.fieldName(name,"name")}
         % description - The description of the metadata attribute - type: string
-        description string { macrobond.JSONMapper.fieldName(description,"description") }
+        description string { macrobond.JSONMapper.fieldName(description,"description")}
         % comment - The comment of the metadata attribute - type: string
-        comment string { macrobond.JSONMapper.fieldName(comment,"comment") }
+        comment string { macrobond.JSONMapper.fieldName(comment,"comment")}
         % valueType - The value type of the metadata attribute  3 = Int (32-bit signed integer)  5 = Double (64-bit IEEE floating point number)  7 = TimeStamp (A time stamp including date, time of day and time zone)  8 = String (A unicode string)  11 = Bool (A boolean value that can be true of false) - type: MetadataAttributeType
-        valueType  { macrobond.JSONMapper.fieldName(valueType,"valueType") }
+        valueType  { macrobond.JSONMapper.fieldName(valueType,"valueType")}
         % valueRestriction - Restriction on the value type  1 = Url (The string is an URL)  2 = Email (The string is an e-mail address)  3 = Date (Only the date of the TimeStamp is valid)  4 = Positive (The integer or double is >= 0)  5 = Json (The string is encoded as JSON) - type: MetadataAttributeTypeRestriction
-        valueRestriction  { macrobond.JSONMapper.fieldName(valueRestriction,"valueRestriction") }
+        valueRestriction  { macrobond.JSONMapper.fieldName(valueRestriction,"valueRestriction")}
         % usesValueList - If True, the metadata attribute uses a list of values - type: logical
-        usesValueList logical { macrobond.JSONMapper.fieldName(usesValueList,"usesValueList") }
+        usesValueList logical { macrobond.JSONMapper.fieldName(usesValueList,"usesValueList")}
         % canListValues - If True then the values of this type of metadata can be listen using the ListAllValues function - type: logical
-        canListValues logical { macrobond.JSONMapper.fieldName(canListValues,"canListValues") }
+        canListValues logical { macrobond.JSONMapper.fieldName(canListValues,"canListValues")}
         % canHaveMultipleValues - If True then this type of metadata can have multiple values in a metadata collection - type: logical
-        canHaveMultipleValues logical { macrobond.JSONMapper.fieldName(canHaveMultipleValues,"canHaveMultipleValues") }
+        canHaveMultipleValues logical { macrobond.JSONMapper.fieldName(canHaveMultipleValues,"canHaveMultipleValues")}
         % isDatabaseEntity - If True then this type of metadata is an entity that can be retrieved from the database - type: logical
-        isDatabaseEntity logical { macrobond.JSONMapper.fieldName(isDatabaseEntity,"isDatabaseEntity") }
+        isDatabaseEntity logical { macrobond.JSONMapper.fieldName(isDatabaseEntity,"isDatabaseEntity")}
         % appliesTo - If provided, specifies what types of entities that this attribute applies to - type: array of string
-        appliesTo string { macrobond.JSONMapper.fieldName(appliesTo,"appliesTo"), macrobond.JSONMapper.JSONArray }
+        appliesTo string { macrobond.JSONMapper.fieldName(appliesTo,"appliesTo"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -47,14 +47,14 @@ classdef MetadataAttributeInformationResponse < macrobond.JSONMapper
         % Constructor
         function obj = MetadataAttributeInformationResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.MetadataAttributeInformationResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

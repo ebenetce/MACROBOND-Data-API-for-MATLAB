@@ -1,7 +1,7 @@
-classdef Metadata < macrobond.BaseClient
-    % Metadata No description provided
+classdef Release < macrobond.BaseClient
+    % Release No description provided
     %
-    % Metadata Properties:
+    % Release Properties:
     %
     %   serverUri           - Base URI to use when calling the API. Allows using a different server
     %                         than specified in the original API spec.
@@ -36,12 +36,11 @@ classdef Metadata < macrobond.BaseClient
     %                         jar is also saved to disk (cookies.mat in the same directory as 
     %                         BaseClient) and reloaded in new MATLAB sessions.
     %
-    % Metadata Methods:
+    % Release Methods:
     %
-    %   Metadata - Constructor
-    %   metadataGetattributeinformationGet - Get information about one or more metadata attributes
-    %   metadataGetvalueinformationGet - Get information about one or more metadata values
-    %   metadataListattributevaluesGet - List the values of a metadata attribute
+    %   Release - Constructor
+    %   releaseUpcomingreleasesGet - List the upcoming releases
+    %   releaseUpcomingreleasesPost - List the upcoming releases
     %
     % See Also: matlab.net.http.HTTPOptions, matlab.net.http.Credentials, 
     %   CookieJar.setCookies, macrobond.BaseClient
@@ -60,8 +59,8 @@ classdef Metadata < macrobond.BaseClient
 
     % Class methods
     methods
-        function obj = Metadata(options)
-            % Metadata Constructor, creates a Metadata instance.
+        function obj = Release(options)
+            % Release Constructor, creates a Release instance.
             % When called without inputs, tries to load configuration
             % options from JSON file 'macrobond.Client.Settings.json'.
             % If this file is not present, the instance is initialized with 
@@ -74,17 +73,17 @@ classdef Metadata < macrobond.BaseClient
             %
             %   % Create a client with default options and serverUri
             %   % as parsed from OpenAPI spec (if available)
-            %   client = macrobond.api.Metadata();
+            %   client = macrobond.api.Release();
             %
             %   % Create a client for alternative server/base URI
-            %   client = macrobond.api.Metadata("serverUri","https://example.com:1234/api/");
+            %   client = macrobond.api.Release("serverUri","https://example.com:1234/api/");
             %
             %   % Create a client loading configuration options from 
             %   % JSON configuration file
-            %   client = macrobond.api.Metadata("configFile","myconfig.json");
+            %   client = macrobond.api.Release("configFile","myconfig.json");
             %
             %   % Create a client with alternative HTTPOptions and an API key
-            %   client = macrobond.api.Metadata("httpOptions",...
+            %   client = macrobond.api.Release("httpOptions",...
             %       matlab.net.http.HTTPOptions("ConnectTimeout",42),...
             %       "apiKey", "ABC123");
 
@@ -97,29 +96,32 @@ classdef Metadata < macrobond.BaseClient
             obj@macrobond.BaseClient(args{:})
         end
 
-        function [code, result, response] = metadataGetattributeinformationGet(obj, n)
-            % metadataGetattributeinformationGet Get information about one or more metadata attributes
-            % Get information about metadata attributes. The result will be in the same order as the request. OAuth scope: macrobond_web_api.read_mb
+        function [code, result, response] = releaseUpcomingreleasesGet(obj, n, optionals)
+            % releaseUpcomingreleasesGet List the upcoming releases
+            % List upcoming releases until provided cutoff time OAuth scope: macrobond_web_api.read_mb
             %
             % Required parameters:
-            %   n - The name of a metadata attribute, Type: array
+            %   n - The name of one or more releases, Type: array
             %
-            % No optional parameters
+            % Optional name-value parameters:
+            %   endTime - The cutoff time. If not specified, 1 year from now will be used., Type: datetime, Format: date-time
             %
             % Responses:
             %   200: The operation was successful
-            %   404: At least one attribute was not found
+            %   400: The requested entity was not a Release entity
+            %   404: The entity was not found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
             %   429: Too many requests. The maximum number of requests per day has been reached.
             %
-            % Returns: Array of MetadataAttributeInformationResponse
+            % Returns: Array of ReleaseEntityResponse
             %
-            % See Also: macrobond.models.MetadataAttributeInformationResponse
+            % See Also: macrobond.models.ReleaseEntityResponse
 
             arguments
-              obj macrobond.api.Metadata
+              obj macrobond.api.Release
               n string
+              optionals.endTime datetime
             end
 
             % Create the request object
@@ -132,8 +134,8 @@ classdef Metadata < macrobond.BaseClient
             if ismember("application/json",specAcceptHeaders)
                 request.Header(end+1) = matlab.net.http.field.AcceptField('application/json');
             else
-                error("macrobond:api:metadataGetattributeinformationGet:UnsupportedMediaType","Generated OpenAPI Classes only support 'application/json' MediaType.\n" + ...
-                    "Operation '%s' does not support this. It may be possible to call this operation by first editing the generated code.","metadataGetattributeinformationGet")
+                error("macrobond:api:releaseUpcomingreleasesGet:UnsupportedMediaType","Generated OpenAPI Classes only support 'application/json' MediaType.\n" + ...
+                    "Operation '%s' does not support this. It may be possible to call this operation by first editing the generated code.","releaseUpcomingreleasesGet")
             end
             
             % No body input, so no need to check its content type
@@ -157,12 +159,13 @@ classdef Metadata < macrobond.BaseClient
                 uri = matlab.net.URI("https://api.macrobondfinancial.com");
             end
             % Append the operation end-point
-            uri.EncodedPath = uri.EncodedPath + "/v1/metadata/getattributeinformation";
+            uri.EncodedPath = uri.EncodedPath + "/v1/release/upcomingreleases";
 
             % No path parameters
 
             % Set query parameters
             uri.Query(end+1) = matlab.net.QueryParameter("n", n, matlab.net.ArrayFormat.repeating);
+            if isfield(optionals, "endTime"), uri.Query(end+1) = matlab.net.QueryParameter("endTime", optionals.endTime); end
             
             % No JSON body parameters
 
@@ -179,7 +182,7 @@ classdef Metadata < macrobond.BaseClient
             request = obj.applyCookies(request, uri);
 
             % Call preSend
-            [request, httpOptions, uri] = obj.preSend("metadataGetattributeinformationGet", request, httpOptions, uri);
+            [request, httpOptions, uri] = obj.preSend("releaseUpcomingreleasesGet", request, httpOptions, uri);
 
             % Perform the request
             [response, ~, history] = send(request, uri, httpOptions);
@@ -188,133 +191,13 @@ classdef Metadata < macrobond.BaseClient
             obj.setCookies(history);
 
             % Call postSend
-            response = obj.postSend("metadataGetattributeinformationGet", response, request, uri, httpOptions);
+            response = obj.postSend("releaseUpcomingreleasesGet", response, request, uri, httpOptions);
 
             % Handle response
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.MetadataAttributeInformationResponse().fromJSON(response.Body.Data);
-                case 404
-                    result = response.Body.Data;
-                case 401
-                    result = response.Body.Data;
-                case 403
-                    result = response.Body.Data;
-                case 429
-                    result = response.Body.Data;
-                otherwise % Unexpected output, not declared in spec
-                    % Any response in the OK range will not throw a warning
-                    if (int32(response.StatusCode) < 200 || int32(response.StatusCode) >= 300)
-                        % Others will throw a warning
-                        warning("macrobond:api:metadataGetattributeinformationGet:UndocumentedResponse","Operation '%s' returned an undocumented response code '%d'.\n" + ...
-                            "Response Body is returned as raw data.","metadataGetattributeinformationGet",code);
-                    end
-                    % Return the raw body data
-                    result = response.Body.Data;
-            end
-        
-        end % metadataGetattributeinformationGet method
-
-        function [code, result, response] = metadataGetvalueinformationGet(obj, v)
-            % metadataGetvalueinformationGet Get information about one or more metadata values
-            % Get information about metadata values. The result will be in the same order as the request. OAuth scope: macrobond_web_api.read_mb
-            %
-            % Required parameters:
-            %   v - The name of a metadata attribute followed by comma and then the value, Type: array
-            %
-            % No optional parameters
-            %
-            % Responses:
-            %   200: The operation was successful
-            %   400: Malformed request
-            %   404: At least one attribute or value was not found
-            %   401: Unauthorized. Missing, invalid or expired access token.
-            %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached.
-            %
-            % Returns: Array of MetadataValueInformationResponse
-            %
-            % See Also: macrobond.models.MetadataValueInformationResponse
-
-            arguments
-              obj macrobond.api.Metadata
-              v string
-            end
-
-            % Create the request object
-            request = matlab.net.http.RequestMessage();
-            
-            % Verify that operation supports returning JSON
-            specAcceptHeaders = [...
-                "application/json", ...
-            ];
-            if ismember("application/json",specAcceptHeaders)
-                request.Header(end+1) = matlab.net.http.field.AcceptField('application/json');
-            else
-                error("macrobond:api:metadataGetvalueinformationGet:UnsupportedMediaType","Generated OpenAPI Classes only support 'application/json' MediaType.\n" + ...
-                    "Operation '%s' does not support this. It may be possible to call this operation by first editing the generated code.","metadataGetvalueinformationGet")
-            end
-            
-            % No body input, so no need to check its content type
-            
-            % No header parameters
-
-            % Configure default httpOptions
-            httpOptions = obj.httpOptions;
-            % Never convert API response
-            httpOptions.ConvertResponse = false;
-
-            % Configure request verb/method
-            request.Method = matlab.net.http.RequestMethod('GET');
-
-            % Build the request URI
-            if ~isempty(obj.serverUri)
-                % If URI specified in object, use that
-                uri = obj.serverUri;
-            else
-                % If no server specified use base path from OpenAPI spec
-                uri = matlab.net.URI("https://api.macrobondfinancial.com");
-            end
-            % Append the operation end-point
-            uri.EncodedPath = uri.EncodedPath + "/v1/metadata/getvalueinformation";
-
-            % No path parameters
-
-            % Set query parameters
-            uri.Query(end+1) = matlab.net.QueryParameter("v", v, matlab.net.ArrayFormat.repeating);
-            
-            % No JSON body parameters
-
-            % No form body parameters
-
-            % Configure Authentication
-            authNames = [...
-                "ClientDirectAccess", ...
-                "auth", ...
-            ];  
-            [request, httpOptions, uri] = obj.requestAuth(authNames, request, httpOptions, uri);
-
-            % Add cookies if set
-            request = obj.applyCookies(request, uri);
-
-            % Call preSend
-            [request, httpOptions, uri] = obj.preSend("metadataGetvalueinformationGet", request, httpOptions, uri);
-
-            % Perform the request
-            [response, ~, history] = send(request, uri, httpOptions);
-
-            % Handle cookies if set
-            obj.setCookies(history);
-
-            % Call postSend
-            response = obj.postSend("metadataGetvalueinformationGet", response, request, uri, httpOptions);
-
-            % Handle response
-            code = response.StatusCode;
-            switch (code)
-                case 200
-                    result = macrobond.models.MetadataValueInformationResponse().fromJSON(response.Body.Data);
+                    result = macrobond.models.ReleaseEntityResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 404
@@ -329,39 +212,43 @@ classdef Metadata < macrobond.BaseClient
                     % Any response in the OK range will not throw a warning
                     if (int32(response.StatusCode) < 200 || int32(response.StatusCode) >= 300)
                         % Others will throw a warning
-                        warning("macrobond:api:metadataGetvalueinformationGet:UndocumentedResponse","Operation '%s' returned an undocumented response code '%d'.\n" + ...
-                            "Response Body is returned as raw data.","metadataGetvalueinformationGet",code);
+                        warning("macrobond:api:releaseUpcomingreleasesGet:UndocumentedResponse","Operation '%s' returned an undocumented response code '%d'.\n" + ...
+                            "Response Body is returned as raw data.","releaseUpcomingreleasesGet",code);
                     end
                     % Return the raw body data
                     result = response.Body.Data;
             end
         
-        end % metadataGetvalueinformationGet method
+        end % releaseUpcomingreleasesGet method
 
-        function [code, result, response] = metadataListattributevaluesGet(obj, n)
-            % metadataListattributevaluesGet List the values of a metadata attribute
-            % List all metadata attribute values. The attribute must have the property canListValues. OAuth scope: macrobond_web_api.read_mb
+        function [code, result, response] = releaseUpcomingreleasesPost(obj, request_body, optionals)
+            % releaseUpcomingreleasesPost List the upcoming releases
+            % List upcoming releases until provided cutoff time OAuth scope: macrobond_web_api.read_mb
             %
             % Required parameters:
-            %   n - The name of a metadata attribute, Type: string
+            %   request_body - The name of one or more releases to request, Type: array
+            %       Required properties in the model for this call:
+            %       Optional properties in the model for this call:
             %
-            % No optional parameters
+            % Optional name-value parameters:
+            %   endTime - No description provided, Type: datetime, Format: date-time
             %
             % Responses:
             %   200: The operation was successful
-            %   400: Values cannot be listed for the attribute
-            %   404: The attribute was not found
+            %   400: The requested entity was not a Release entity
+            %   404: The entity was not found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
             %   429: Too many requests. The maximum number of requests per day has been reached.
             %
-            % Returns: Array of MetadataValueInformationResponse
+            % Returns: Array of ReleaseEntityResponse
             %
-            % See Also: macrobond.models.MetadataValueInformationResponse
+            % See Also: macrobond.models.ReleaseEntityResponse
 
             arguments
-              obj macrobond.api.Metadata
-              n string
+              obj macrobond.api.Release
+              request_body string
+              optionals.endTime datetime
             end
 
             % Create the request object
@@ -374,11 +261,24 @@ classdef Metadata < macrobond.BaseClient
             if ismember("application/json",specAcceptHeaders)
                 request.Header(end+1) = matlab.net.http.field.AcceptField('application/json');
             else
-                error("macrobond:api:metadataListattributevaluesGet:UnsupportedMediaType","Generated OpenAPI Classes only support 'application/json' MediaType.\n" + ...
-                    "Operation '%s' does not support this. It may be possible to call this operation by first editing the generated code.","metadataListattributevaluesGet")
+                error("macrobond:api:releaseUpcomingreleasesPost:UnsupportedMediaType","Generated OpenAPI Classes only support 'application/json' MediaType.\n" + ...
+                    "Operation '%s' does not support this. It may be possible to call this operation by first editing the generated code.","releaseUpcomingreleasesPost")
             end
             
-            % No body input, so no need to check its content type
+            % Verify that operation supports JSON or FORM as input
+            specContentTypeHeaders = [...
+                "application/json", ...
+                "text/json", ...
+                "application/*+json", ...
+            ];
+            if ismember("application/json",specContentTypeHeaders)
+                request.Header(end+1) = matlab.net.http.field.ContentTypeField('application/json');
+            elseif ismember("application/x-www-form-urlencoded",specContentTypeHeaders)
+                request.Header(end+1) = matlab.net.http.field.ContentTypeField('application/x-www-form-urlencoded');
+            else
+                error("macrobond:api:releaseUpcomingreleasesPost:UnsupportedMediaType","Generated OpenAPI Classes only support 'application/json' and 'application/x-www-form-urlencoded' MediaTypes.\n" + ...
+                    "Operation '%s' does not support this. It may be possible to call this operation by first editing the generated code.","releaseUpcomingreleasesPost")
+            end
             
             % No header parameters
 
@@ -388,7 +288,7 @@ classdef Metadata < macrobond.BaseClient
             httpOptions.ConvertResponse = false;
 
             % Configure request verb/method
-            request.Method = matlab.net.http.RequestMethod('GET');
+            request.Method = matlab.net.http.RequestMethod('POST');
 
             % Build the request URI
             if ~isempty(obj.serverUri)
@@ -399,14 +299,19 @@ classdef Metadata < macrobond.BaseClient
                 uri = matlab.net.URI("https://api.macrobondfinancial.com");
             end
             % Append the operation end-point
-            uri.EncodedPath = uri.EncodedPath + "/v1/metadata/listattributevalues";
+            uri.EncodedPath = uri.EncodedPath + "/v1/release/upcomingreleases";
 
             % No path parameters
 
             % Set query parameters
-            uri.Query(end+1) = matlab.net.QueryParameter("n", n);
+            if isfield(optionals, "endTime"), uri.Query(end+1) = matlab.net.QueryParameter("endTime", optionals.endTime); end
             
-            % No JSON body parameters
+            % Set JSON Body
+            requiredProperties = [...
+            ];
+            optionalProperties = [...
+            ];
+            request.Body(1).Payload = request_body.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 
@@ -421,7 +326,7 @@ classdef Metadata < macrobond.BaseClient
             request = obj.applyCookies(request, uri);
 
             % Call preSend
-            [request, httpOptions, uri] = obj.preSend("metadataListattributevaluesGet", request, httpOptions, uri);
+            [request, httpOptions, uri] = obj.preSend("releaseUpcomingreleasesPost", request, httpOptions, uri);
 
             % Perform the request
             [response, ~, history] = send(request, uri, httpOptions);
@@ -430,13 +335,13 @@ classdef Metadata < macrobond.BaseClient
             obj.setCookies(history);
 
             % Call postSend
-            response = obj.postSend("metadataListattributevaluesGet", response, request, uri, httpOptions);
+            response = obj.postSend("releaseUpcomingreleasesPost", response, request, uri, httpOptions);
 
             % Handle response
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.MetadataValueInformationResponse().fromJSON(response.Body.Data);
+                    result = macrobond.models.ReleaseEntityResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 404
@@ -451,14 +356,14 @@ classdef Metadata < macrobond.BaseClient
                     % Any response in the OK range will not throw a warning
                     if (int32(response.StatusCode) < 200 || int32(response.StatusCode) >= 300)
                         % Others will throw a warning
-                        warning("macrobond:api:metadataListattributevaluesGet:UndocumentedResponse","Operation '%s' returned an undocumented response code '%d'.\n" + ...
-                            "Response Body is returned as raw data.","metadataListattributevaluesGet",code);
+                        warning("macrobond:api:releaseUpcomingreleasesPost:UndocumentedResponse","Operation '%s' returned an undocumented response code '%d'.\n" + ...
+                            "Response Body is returned as raw data.","releaseUpcomingreleasesPost",code);
                     end
                     % Return the raw body data
                     result = response.Body.Data;
             end
         
-        end % metadataListattributevaluesGet method
+        end % releaseUpcomingreleasesPost method
 
     end %methods
 end %class

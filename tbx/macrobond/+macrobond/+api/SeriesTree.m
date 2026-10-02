@@ -193,7 +193,7 @@ classdef SeriesTree < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesTreeLocationPart(response.Body.Data);
+                    result = macrobond.models.SeriesTreeLocationPart().fromJSON(response.Body.Data);
                 case 401
                     result = response.Body.Data;
                 case 403
@@ -313,7 +313,7 @@ classdef SeriesTree < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesTreeListingResponse(response.Body.Data);
+                    result = macrobond.models.SeriesTreeListingResponse().fromJSON(response.Body.Data);
                 case 404
                     result = response.Body.Data;
                 case 401
@@ -434,7 +434,7 @@ classdef SeriesTree < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.seriestree_getnodes_get_200_response_inner(response.Body.Data);
+                    result = macrobond.models.seriestree_getnodes_get_200_response_inner().fromJSON(response.Body.Data);
                 case 401
                     result = response.Body.Data;
                 case 403

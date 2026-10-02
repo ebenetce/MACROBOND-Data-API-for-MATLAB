@@ -13,9 +13,9 @@ classdef UnifiedSeriesResponse < macrobond.JSONMapper
     % Class properties
     properties
         % dates - The dates of the series or not specified if there were only errors - type: array of datetime
-        dates datetime { macrobond.JSONMapper.fieldName(dates,"dates"), macrobond.JSONMapper.JSONArray }
+        dates datetime { macrobond.JSONMapper.fieldName(dates,"dates"), macrobond.JSONMapper.JSONArray}
         % series - The list of series responses in the same order as in the request - type: array of ValuesResponse
-        series macrobond.models.ValuesResponse { macrobond.JSONMapper.fieldName(series,"series"), macrobond.JSONMapper.JSONArray }
+        series macrobond.models.ValuesResponse { macrobond.JSONMapper.fieldName(series,"series"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -23,14 +23,14 @@ classdef UnifiedSeriesResponse < macrobond.JSONMapper
         % Constructor
         function obj = UnifiedSeriesResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.UnifiedSeriesResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

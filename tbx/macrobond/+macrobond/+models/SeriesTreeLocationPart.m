@@ -13,9 +13,9 @@ classdef SeriesTreeLocationPart < macrobond.JSONMapper
     % Class properties
     properties
         % title - The title of the location element - type: string
-        title string { macrobond.JSONMapper.fieldName(title,"title") }
+        title string { macrobond.JSONMapper.fieldName(title,"title")}
         % child - The child of the location part - type: SeriesTreeLocationPart
-        child macrobond.models.SeriesTreeLocationPart { macrobond.JSONMapper.fieldName(child,"child") }
+        child macrobond.models.SeriesTreeLocationPart { macrobond.JSONMapper.fieldName(child,"child")}
     end
 
     % Class methods
@@ -23,14 +23,14 @@ classdef SeriesTreeLocationPart < macrobond.JSONMapper
         % Constructor
         function obj = SeriesTreeLocationPart(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesTreeLocationPart
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

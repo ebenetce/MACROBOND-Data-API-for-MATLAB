@@ -13,9 +13,9 @@ classdef SeriesTreeListingGroup < macrobond.JSONMapper
     % Class properties
     properties
         % title - The title of the group. This is might be omitted if there is only one group. - type: string
-        title string { macrobond.JSONMapper.fieldName(title,"title") }
+        title string { macrobond.JSONMapper.fieldName(title,"title")}
         % series - The list of series in this group. - type: array of SeriesTreeListingSeries
-        series macrobond.models.SeriesTreeListingSeries { macrobond.JSONMapper.fieldName(series,"series"), macrobond.JSONMapper.JSONArray }
+        series macrobond.models.SeriesTreeListingSeries { macrobond.JSONMapper.fieldName(series,"series"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -23,14 +23,14 @@ classdef SeriesTreeListingGroup < macrobond.JSONMapper
         % Constructor
         function obj = SeriesTreeListingGroup(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesTreeListingGroup
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

@@ -445,7 +445,7 @@ classdef InHouseSeries < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesStorageLocationResponse(response.Body.Data);
+                    result = macrobond.models.SeriesStorageLocationResponse().fromJSON(response.Body.Data);
                 case 401
                     result = response.Body.Data;
                 case 403

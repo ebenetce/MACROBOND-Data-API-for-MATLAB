@@ -15,13 +15,13 @@ classdef SeriesTreeListingResponse < macrobond.JSONMapper
     % Class properties
     properties
         % commonTitle - The common part of the series titles - type: string
-        commonTitle string { macrobond.JSONMapper.fieldName(commonTitle,"commonTitle") }
+        commonTitle string { macrobond.JSONMapper.fieldName(commonTitle,"commonTitle")}
         % hasAspects - If True then there are several aspects of the series which is typically displayed as tabs - type: logical
-        hasAspects logical { macrobond.JSONMapper.fieldName(hasAspects,"hasAspects") }
+        hasAspects logical { macrobond.JSONMapper.fieldName(hasAspects,"hasAspects")}
         % hasGroups - If True then the list is grouped - type: logical
-        hasGroups logical { macrobond.JSONMapper.fieldName(hasGroups,"hasGroups") }
+        hasGroups logical { macrobond.JSONMapper.fieldName(hasGroups,"hasGroups")}
         % aspects - The list of aspects. There will always be at least one. - type: array of SeriesTreeListingAspect
-        aspects macrobond.models.SeriesTreeListingAspect { macrobond.JSONMapper.fieldName(aspects,"aspects"), macrobond.JSONMapper.JSONArray }
+        aspects macrobond.models.SeriesTreeListingAspect { macrobond.JSONMapper.fieldName(aspects,"aspects"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -29,14 +29,14 @@ classdef SeriesTreeListingResponse < macrobond.JSONMapper
         % Constructor
         function obj = SeriesTreeListingResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesTreeListingResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

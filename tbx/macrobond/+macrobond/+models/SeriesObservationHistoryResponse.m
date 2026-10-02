@@ -14,11 +14,11 @@ classdef SeriesObservationHistoryResponse < macrobond.JSONMapper
     % Class properties
     properties
         % observationDate - The date of the observation - type: datetime
-        observationDate datetime { macrobond.JSONMapper.fieldName(observationDate,"observationDate") }
+        observationDate datetime { macrobond.JSONMapper.fieldName(observationDate,"observationDate")}
         % values - The historical values of the observation or an empty list if there are no recorded values for the specified date. - type: array of double
-        values double { macrobond.JSONMapper.fieldName(values,"values"), macrobond.JSONMapper.JSONArray }
+        values double { macrobond.JSONMapper.fieldName(values,"values"), macrobond.JSONMapper.JSONArray}
         % timeStamps - A list of timestamps of when the historical values were recorded. The first timestamp may be null if the time of the original is unknown. - type: array of datetime
-        timeStamps datetime { macrobond.JSONMapper.fieldName(timeStamps,"timeStamps"), macrobond.JSONMapper.JSONArray }
+        timeStamps datetime { macrobond.JSONMapper.fieldName(timeStamps,"timeStamps"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -26,14 +26,14 @@ classdef SeriesObservationHistoryResponse < macrobond.JSONMapper
         % Constructor
         function obj = SeriesObservationHistoryResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesObservationHistoryResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

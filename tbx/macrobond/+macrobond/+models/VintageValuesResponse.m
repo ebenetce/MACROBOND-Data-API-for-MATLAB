@@ -14,11 +14,11 @@ classdef VintageValuesResponse < macrobond.JSONMapper
     % Class properties
     properties
         % vintageTimeStamp - The time when this version of the series was recorded. It is omitted if the series does not have revision history and for the original set of values before any revisions were recorded. - type: datetime
-        vintageTimeStamp datetime { macrobond.JSONMapper.stringDatetime(vintageTimeStamp,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(vintageTimeStamp,"vintageTimeStamp") }
+        vintageTimeStamp datetime { macrobond.JSONMapper.stringDatetime(vintageTimeStamp,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(vintageTimeStamp,"vintageTimeStamp")}
         % dates - The dates of the vintage series. - type: array of datetime
-        dates datetime { macrobond.JSONMapper.fieldName(dates,"dates"), macrobond.JSONMapper.JSONArray }
+        dates datetime { macrobond.JSONMapper.fieldName(dates,"dates"), macrobond.JSONMapper.JSONArray}
         % values - The values of the vintage series. Missing values are represented by null. - type: array of double
-        values double { macrobond.JSONMapper.fieldName(values,"values"), macrobond.JSONMapper.JSONArray }
+        values double { macrobond.JSONMapper.fieldName(values,"values"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -26,14 +26,14 @@ classdef VintageValuesResponse < macrobond.JSONMapper
         % Constructor
         function obj = VintageValuesResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.VintageValuesResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

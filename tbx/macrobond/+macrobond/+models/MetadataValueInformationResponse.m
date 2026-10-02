@@ -15,13 +15,13 @@ classdef MetadataValueInformationResponse < macrobond.JSONMapper
     % Class properties
     properties
         % attributeName - The name of the metadata attribute - type: string
-        attributeName string { macrobond.JSONMapper.fieldName(attributeName,"attributeName") }
+        attributeName string { macrobond.JSONMapper.fieldName(attributeName,"attributeName")}
         % value - type: MetadataValueInformationResponse_value
-        value  { macrobond.JSONMapper.fieldName(value,"value") }
+        value  { macrobond.JSONMapper.fieldName(value,"value")}
         % description - The description of the metadata value - type: string
-        description string { macrobond.JSONMapper.fieldName(description,"description") }
+        description string { macrobond.JSONMapper.fieldName(description,"description")}
         % comment - The comment of the metadata value - type: string
-        comment string { macrobond.JSONMapper.fieldName(comment,"comment") }
+        comment string { macrobond.JSONMapper.fieldName(comment,"comment")}
     end
 
     % Class methods
@@ -29,14 +29,14 @@ classdef MetadataValueInformationResponse < macrobond.JSONMapper
         % Constructor
         function obj = MetadataValueInformationResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.MetadataValueInformationResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

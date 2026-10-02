@@ -205,7 +205,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.EntityInfoForDisplayResponse(response.Body.Data);
+                    result = macrobond.models.EntityInfoForDisplayResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 404
@@ -240,6 +240,7 @@ classdef Series < macrobond.BaseClient
             %   ifModifiedSince - If specified, the series will only be returned if modified since the specified time. If not, HTTP status 304 (Not Modified) will be returned. The value should be from the metadata LastModifiedTimeStamp of the previous response., Type: datetime, Format: date-time
             %   lastRevision - If specified, incremental updates can be return. HTTP status 206 (Partial Content) will be returned in that case. The value should be from the metadata LastRevisionTimeStamp of the previous response., Type: datetime, Format: date-time
             %   lastRevisionAdjustment - If specified, incremental updates can be return. HTTP status 206 (Partial Content) will be returned in that case. The value should be from the metadata LastRevisionAdjustmentTimeStamp of the previous response., Type: datetime, Format: date-time
+            %   dateEndOfPeriod - Return the observation dates at the end of each period instead of the start, Type: logical
             %
             % Responses:
             %   200: The operation was successful
@@ -261,6 +262,7 @@ classdef Series < macrobond.BaseClient
               optionals.ifModifiedSince datetime
               optionals.lastRevision datetime
               optionals.lastRevisionAdjustment datetime
+              optionals.dateEndOfPeriod logical
             end
 
             % Create the request object
@@ -307,6 +309,7 @@ classdef Series < macrobond.BaseClient
             if isfield(optionals, "ifModifiedSince"), uri.Query(end+1) = matlab.net.QueryParameter("ifModifiedSince", optionals.ifModifiedSince); end
             if isfield(optionals, "lastRevision"), uri.Query(end+1) = matlab.net.QueryParameter("lastRevision", optionals.lastRevision); end
             if isfield(optionals, "lastRevisionAdjustment"), uri.Query(end+1) = matlab.net.QueryParameter("lastRevisionAdjustment", optionals.lastRevisionAdjustment); end
+            if isfield(optionals, "dateEndOfPeriod"), uri.Query(end+1) = matlab.net.QueryParameter("dateEndOfPeriod", optionals.dateEndOfPeriod); end
             
             % No JSON body parameters
 
@@ -338,9 +341,9 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.VintageSeriesResponse(response.Body.Data);
+                    result = macrobond.models.VintageSeriesResponse().fromJSON(response.Body.Data);
                 case 206
-                    result = macrobond.models.VintageSeriesResponse(response.Body.Data);
+                    result = macrobond.models.VintageSeriesResponse().fromJSON(response.Body.Data);
                 case 304
                     result = response.Body.Data;
                 case 400
@@ -452,7 +455,7 @@ classdef Series < macrobond.BaseClient
             ];
             optionalProperties = [...
             ];
-            request.Body(1).Payload = RevisionHistoryRequest.getPayload(requiredProperties,optionalProperties);
+            request.Body(1).Payload = RevisionHistoryRequest.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 
@@ -482,7 +485,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesWithVintagesResponse(response.Body.Data);
+                    result = macrobond.models.SeriesWithVintagesResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 401
@@ -601,7 +604,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.EntityResponse(response.Body.Data);
+                    result = macrobond.models.EntityResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 401
@@ -709,7 +712,7 @@ classdef Series < macrobond.BaseClient
             ];
             optionalProperties = [...
             ];
-            request.Body(1).Payload = EntityRequest.getPayload(requiredProperties,optionalProperties);
+            request.Body(1).Payload = EntityRequest.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 
@@ -739,7 +742,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.EntityResponse(response.Body.Data);
+                    result = macrobond.models.EntityResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 401
@@ -771,6 +774,7 @@ classdef Series < macrobond.BaseClient
             %
             % Optional name-value parameters:
             %   getTimesOfChange - If True, include information of the time each values was last changed, Type: logical
+            %   dateEndOfPeriod - Return the observation dates at the end of each period instead of the start, Type: logical
             %
             % Responses:
             %   200: The operation was successful
@@ -787,6 +791,7 @@ classdef Series < macrobond.BaseClient
               nth int32
               n string
               optionals.getTimesOfChange logical
+              optionals.dateEndOfPeriod logical
             end
 
             % Create the request object
@@ -832,6 +837,7 @@ classdef Series < macrobond.BaseClient
             uri.Query(end+1) = matlab.net.QueryParameter("nth", nth);
             if isfield(optionals, "getTimesOfChange"), uri.Query(end+1) = matlab.net.QueryParameter("getTimesOfChange", optionals.getTimesOfChange); end
             uri.Query(end+1) = matlab.net.QueryParameter("n", n, matlab.net.ArrayFormat.repeating);
+            if isfield(optionals, "dateEndOfPeriod"), uri.Query(end+1) = matlab.net.QueryParameter("dateEndOfPeriod", optionals.dateEndOfPeriod); end
             
             % No JSON body parameters
 
@@ -863,7 +869,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesWithTimesOfChangeResponse(response.Body.Data);
+                    result = macrobond.models.SeriesWithTimesOfChangeResponse().fromJSON(response.Body.Data);
                 case 401
                     result = response.Body.Data;
                 case 403
@@ -984,7 +990,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesObservationHistoryResponse(response.Body.Data);
+                    result = macrobond.models.SeriesObservationHistoryResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 404
@@ -1008,14 +1014,15 @@ classdef Series < macrobond.BaseClient
         
         end % seriesFetchobservationhistoryGet method
 
-        function [code, result, response] = seriesFetchseriesGet(obj, n)
+        function [code, result, response] = seriesFetchseriesGet(obj, n, optionals)
             % seriesFetchseriesGet Fetch one or more series
             % Fetch one or more series. The result will be in the same order as the request. OAuth scope: macrobond_web_api.read_mb
             %
             % Required parameters:
             %   n - The name of one or more series to fetch, Type: array
             %
-            % No optional parameters
+            % Optional name-value parameters:
+            %   dateEndOfPeriod - Return the observation dates at the end of each period instead of the start, Type: logical
             %
             % Responses:
             %   200: The operation was successful
@@ -1031,6 +1038,7 @@ classdef Series < macrobond.BaseClient
             arguments
               obj macrobond.api.Series
               n string
+              optionals.dateEndOfPeriod logical
             end
 
             % Create the request object
@@ -1074,6 +1082,7 @@ classdef Series < macrobond.BaseClient
 
             % Set query parameters
             uri.Query(end+1) = matlab.net.QueryParameter("n", n, matlab.net.ArrayFormat.repeating);
+            if isfield(optionals, "dateEndOfPeriod"), uri.Query(end+1) = matlab.net.QueryParameter("dateEndOfPeriod", optionals.dateEndOfPeriod); end
             
             % No JSON body parameters
 
@@ -1105,7 +1114,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesResponse(response.Body.Data);
+                    result = macrobond.models.SeriesResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 401
@@ -1127,12 +1136,12 @@ classdef Series < macrobond.BaseClient
         
         end % seriesFetchseriesGet method
 
-        function [code, result, response] = seriesFetchseriesPost(obj, EntityRequest)
+        function [code, result, response] = seriesFetchseriesPost(obj, DateTypeDefinedEntityRequest)
             % seriesFetchseriesPost Fetch one or more series
             % Fetch one or more series. A timestamp can be specified for each series to conditionally retrieve a result. This is typically the value of the metadata LastModifiedTimeStamp from a previous request. The result will be in the same order as the request. OAuth scope: macrobond_web_api.read_mb
             %
             % Required parameters:
-            %   EntityRequest - The name and timestamp of one or more series to request, Type: array
+            %   DateTypeDefinedEntityRequest - The name and timestamp of one or more series to request, Type: array
             %       Required properties in the model for this call:
             %       Optional properties in the model for this call:
             %
@@ -1151,7 +1160,7 @@ classdef Series < macrobond.BaseClient
 
             arguments
               obj macrobond.api.Series
-              EntityRequest macrobond.models.EntityRequest
+              DateTypeDefinedEntityRequest macrobond.models.DateTypeDefinedEntityRequest
             end
 
             % Create the request object
@@ -1213,7 +1222,7 @@ classdef Series < macrobond.BaseClient
             ];
             optionalProperties = [...
             ];
-            request.Body(1).Payload = EntityRequest.getPayload(requiredProperties,optionalProperties);
+            request.Body(1).Payload = DateTypeDefinedEntityRequest.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 
@@ -1243,7 +1252,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesResponse(response.Body.Data);
+                    result = macrobond.models.SeriesResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 401
@@ -1282,6 +1291,7 @@ classdef Series < macrobond.BaseClient
             %           startPoint
             %           endDateMode
             %           endPoint
+            %           dateEndOfPeriod
             %
             % No optional parameters
             %
@@ -1368,6 +1378,7 @@ classdef Series < macrobond.BaseClient
                 "startPoint",...
                 "endDateMode",...
                 "endPoint",...
+                "dateEndOfPeriod",...
             ];
             request.Body(1).Payload = UnifiedSeriesRequest.getPayload(requiredProperties,optionalProperties);
 
@@ -1399,7 +1410,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.UnifiedSeriesResponse(response.Body.Data);
+                    result = macrobond.models.UnifiedSeriesResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 401
@@ -1431,6 +1442,7 @@ classdef Series < macrobond.BaseClient
             %
             % Optional name-value parameters:
             %   getTimesOfChange - If True, include information of the time each values was last changed, Type: logical
+            %   dateEndOfPeriod - Return the observation dates at the end of each period instead of the start, Type: logical
             %
             % Responses:
             %   200: The operation was successful
@@ -1447,6 +1459,7 @@ classdef Series < macrobond.BaseClient
               t datetime
               n string
               optionals.getTimesOfChange logical
+              optionals.dateEndOfPeriod logical
             end
 
             % Create the request object
@@ -1492,6 +1505,7 @@ classdef Series < macrobond.BaseClient
             uri.Query(end+1) = matlab.net.QueryParameter("t", t);
             if isfield(optionals, "getTimesOfChange"), uri.Query(end+1) = matlab.net.QueryParameter("getTimesOfChange", optionals.getTimesOfChange); end
             uri.Query(end+1) = matlab.net.QueryParameter("n", n, matlab.net.ArrayFormat.repeating);
+            if isfield(optionals, "dateEndOfPeriod"), uri.Query(end+1) = matlab.net.QueryParameter("dateEndOfPeriod", optionals.dateEndOfPeriod); end
             
             % No JSON body parameters
 
@@ -1523,7 +1537,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.VintageSeriesResponse(response.Body.Data);
+                    result = macrobond.models.VintageSeriesResponse().fromJSON(response.Body.Data);
                 case 401
                     result = response.Body.Data;
                 case 403
@@ -1639,7 +1653,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.DataPackageListResponse(response.Body.Data);
+                    result = macrobond.models.DataPackageListResponse().fromJSON(response.Body.Data);
                 case 403
                     result = response.Body.Data;
                 case 401
@@ -1755,7 +1769,7 @@ classdef Series < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SeriesWithRevisionsInfoResponse(response.Body.Data);
+                    result = macrobond.models.SeriesWithRevisionsInfoResponse().fromJSON(response.Body.Data);
                 case 401
                     result = response.Body.Data;
                 case 403

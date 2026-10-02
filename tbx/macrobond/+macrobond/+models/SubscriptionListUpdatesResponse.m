@@ -14,11 +14,11 @@ classdef SubscriptionListUpdatesResponse < macrobond.JSONMapper
     % Class properties
     properties
         % timeStampForIfModifiedSince - A timestamp to pass as the ifModifiedSince parameter in the next request to get incremental updates - type: datetime
-        timeStampForIfModifiedSince datetime { macrobond.JSONMapper.stringDatetime(timeStampForIfModifiedSince,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampForIfModifiedSince,"timeStampForIfModifiedSince") }
+        timeStampForIfModifiedSince datetime { macrobond.JSONMapper.stringDatetime(timeStampForIfModifiedSince,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampForIfModifiedSince,"timeStampForIfModifiedSince")}
         % noMoreChanges - Set to True if there are no more changes. Wait a while before polling again. - type: logical
-        noMoreChanges logical { macrobond.JSONMapper.fieldName(noMoreChanges,"noMoreChanges") }
+        noMoreChanges logical { macrobond.JSONMapper.fieldName(noMoreChanges,"noMoreChanges")}
         % entities - A list of entity names and timestamps when they were last modified. - type: array of EntityNameWithTimeStamp
-        entities macrobond.models.EntityNameWithTimeStamp { macrobond.JSONMapper.fieldName(entities,"entities"), macrobond.JSONMapper.JSONArray }
+        entities macrobond.models.EntityNameWithTimeStamp { macrobond.JSONMapper.fieldName(entities,"entities"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -26,14 +26,14 @@ classdef SubscriptionListUpdatesResponse < macrobond.JSONMapper
         % Constructor
         function obj = SubscriptionListUpdatesResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SubscriptionListUpdatesResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

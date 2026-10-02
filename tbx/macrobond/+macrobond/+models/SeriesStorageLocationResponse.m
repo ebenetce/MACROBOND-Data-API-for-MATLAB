@@ -13,9 +13,9 @@ classdef SeriesStorageLocationResponse < macrobond.JSONMapper
     % Class properties
     properties
         % name - The description of the location - type: string
-        name string { macrobond.JSONMapper.fieldName(name,"name") }
+        name string { macrobond.JSONMapper.fieldName(name,"name")}
         % seriesPrefix - The series prefix to use for this location - type: string
-        seriesPrefix string { macrobond.JSONMapper.fieldName(seriesPrefix,"seriesPrefix") }
+        seriesPrefix string { macrobond.JSONMapper.fieldName(seriesPrefix,"seriesPrefix")}
     end
 
     % Class methods
@@ -23,14 +23,14 @@ classdef SeriesStorageLocationResponse < macrobond.JSONMapper
         % Constructor
         function obj = SeriesStorageLocationResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesStorageLocationResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

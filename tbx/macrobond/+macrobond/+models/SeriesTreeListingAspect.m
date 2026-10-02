@@ -14,11 +14,11 @@ classdef SeriesTreeListingAspect < macrobond.JSONMapper
     % Class properties
     properties
         % title - The title of the aspect. This is might be omitted if there is only one aspect. - type: string
-        title string { macrobond.JSONMapper.fieldName(title,"title") }
+        title string { macrobond.JSONMapper.fieldName(title,"title")}
         % description - A longer description of the aspect that can be used as a tooltip. This is might be omitted if there is only one aspect. - type: string
-        description string { macrobond.JSONMapper.fieldName(description,"description") }
+        description string { macrobond.JSONMapper.fieldName(description,"description")}
         % groups - type: array of SeriesTreeListingGroup
-        groups macrobond.models.SeriesTreeListingGroup { macrobond.JSONMapper.fieldName(groups,"groups"), macrobond.JSONMapper.JSONArray }
+        groups macrobond.models.SeriesTreeListingGroup { macrobond.JSONMapper.fieldName(groups,"groups"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -26,14 +26,14 @@ classdef SeriesTreeListingAspect < macrobond.JSONMapper
         % Constructor
         function obj = SeriesTreeListingAspect(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesTreeListingAspect
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

@@ -4,6 +4,7 @@ classdef SearchRequest < macrobond.JSONMapper
 % SearchRequest Properties:
 %   includeDiscontinued - If True, discontinued entities will be included in the search - type: logical
 %   filters - One or more filters that specifies what to search for - type: array of SearchFilter
+%   suggestFilters - If set to true, include suggestions of filters in the search result. - type: logical
 %   noMetadata - If set to true, no metadata but only the name of the entities will be returned. - type: logical
 %   allowLongResult - If set to true, allow for longer search results. noMetaData must be set to true. - type: logical
 
@@ -15,13 +16,15 @@ classdef SearchRequest < macrobond.JSONMapper
     % Class properties
     properties
         % includeDiscontinued - If True, discontinued entities will be included in the search - type: logical
-        includeDiscontinued logical { macrobond.JSONMapper.fieldName(includeDiscontinued,"includeDiscontinued") }
+        includeDiscontinued logical { macrobond.JSONMapper.fieldName(includeDiscontinued,"includeDiscontinued")}
         % filters - One or more filters that specifies what to search for - type: array of SearchFilter
-        filters macrobond.models.SearchFilter { macrobond.JSONMapper.fieldName(filters,"filters"), macrobond.JSONMapper.JSONArray }
+        filters macrobond.models.SearchFilter { macrobond.JSONMapper.fieldName(filters,"filters"), macrobond.JSONMapper.JSONArray}
+        % suggestFilters - If set to true, include suggestions of filters in the search result. - type: logical
+        suggestFilters logical { macrobond.JSONMapper.fieldName(suggestFilters,"suggestFilters")}
         % noMetadata - If set to true, no metadata but only the name of the entities will be returned. - type: logical
-        noMetadata logical { macrobond.JSONMapper.fieldName(noMetadata,"noMetadata") }
+        noMetadata logical { macrobond.JSONMapper.fieldName(noMetadata,"noMetadata")}
         % allowLongResult - If set to true, allow for longer search results. noMetaData must be set to true. - type: logical
-        allowLongResult logical { macrobond.JSONMapper.fieldName(allowLongResult,"allowLongResult") }
+        allowLongResult logical { macrobond.JSONMapper.fieldName(allowLongResult,"allowLongResult")}
     end
 
     % Class methods
@@ -29,14 +32,14 @@ classdef SearchRequest < macrobond.JSONMapper
         % Constructor
         function obj = SearchRequest(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SearchRequest
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

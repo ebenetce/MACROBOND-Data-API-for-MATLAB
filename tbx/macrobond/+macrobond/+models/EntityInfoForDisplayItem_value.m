@@ -16,14 +16,14 @@ classdef EntityInfoForDisplayItem_value < macrobond.JSONMapper
         % Constructor
         function obj = EntityInfoForDisplayItem_value(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.EntityInfoForDisplayItem_value
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
 
         

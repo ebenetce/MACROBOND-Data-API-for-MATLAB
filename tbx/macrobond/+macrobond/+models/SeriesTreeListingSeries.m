@@ -16,15 +16,15 @@ classdef SeriesTreeListingSeries < macrobond.JSONMapper
     % Class properties
     properties
         % discontinued - If True then the series is discontinued. This is typically indicated by drawing the series title in red. - type: logical
-        discontinued logical { macrobond.JSONMapper.fieldName(discontinued,"discontinued") }
+        discontinued logical { macrobond.JSONMapper.fieldName(discontinued,"discontinued")}
         % indentation - The indentation level. - type: int32
-        indentation int32 { macrobond.JSONMapper.fieldName(indentation,"indentation") }
+        indentation int32 { macrobond.JSONMapper.fieldName(indentation,"indentation")}
         % emphasized - If True then the series is emphasized. This is typically indicated by drawing the series title in bold. - type: logical
-        emphasized logical { macrobond.JSONMapper.fieldName(emphasized,"emphasized") }
+        emphasized logical { macrobond.JSONMapper.fieldName(emphasized,"emphasized")}
         % spaceAbove - If True then some extra space should be drawn above this series. - type: logical
-        spaceAbove logical { macrobond.JSONMapper.fieldName(spaceAbove,"spaceAbove") }
+        spaceAbove logical { macrobond.JSONMapper.fieldName(spaceAbove,"spaceAbove")}
         % xproperties - Properties that can be used for display purposes. It will always contain a property called Description. If there is a series, the property Name will contain the series name. If there is no Name, the series is missing and the description is typically shown as ''disabled''. - type: macrobond.JSONMapperMap
-        xproperties  { macrobond.JSONMapper.fieldName(xproperties,"properties") }
+        xproperties  { macrobond.JSONMapper.fieldName(xproperties,"properties")}
     end
 
     % Class methods
@@ -32,14 +32,14 @@ classdef SeriesTreeListingSeries < macrobond.JSONMapper
         % Constructor
         function obj = SeriesTreeListingSeries(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesTreeListingSeries
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

@@ -13,9 +13,9 @@ classdef EntityNameWithTimeStamp < macrobond.JSONMapper
     % Class properties
     properties
         % name - The entity name - type: string
-        name string { macrobond.JSONMapper.fieldName(name,"name") }
+        name string { macrobond.JSONMapper.fieldName(name,"name")}
         % modified - Timestamp when this entity was last modified - type: datetime
-        modified datetime { macrobond.JSONMapper.stringDatetime(modified,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(modified,"modified") }
+        modified datetime { macrobond.JSONMapper.stringDatetime(modified,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(modified,"modified")}
     end
 
     % Class methods
@@ -23,14 +23,14 @@ classdef EntityNameWithTimeStamp < macrobond.JSONMapper
         % Constructor
         function obj = EntityNameWithTimeStamp(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.EntityNameWithTimeStamp
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

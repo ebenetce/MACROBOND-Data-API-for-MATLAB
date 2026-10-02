@@ -15,13 +15,13 @@ classdef DataPackageListResponse < macrobond.JSONMapper
     % Class properties
     properties
         % timeStampForIfModifiedSince - A timestamp to pass as the ifModifiedSince parameter in the next request to get incremental updates - type: datetime
-        timeStampForIfModifiedSince datetime { macrobond.JSONMapper.stringDatetime(timeStampForIfModifiedSince,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampForIfModifiedSince,"timeStampForIfModifiedSince") }
+        timeStampForIfModifiedSince datetime { macrobond.JSONMapper.stringDatetime(timeStampForIfModifiedSince,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampForIfModifiedSince,"timeStampForIfModifiedSince")}
         % downloadFullListOnOrAfter - Recommended earliest next time to request a full list by omitting timeStampForIfModifiedSince. - type: datetime
-        downloadFullListOnOrAfter datetime { macrobond.JSONMapper.stringDatetime(downloadFullListOnOrAfter,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(downloadFullListOnOrAfter,"downloadFullListOnOrAfter") }
+        downloadFullListOnOrAfter datetime { macrobond.JSONMapper.stringDatetime(downloadFullListOnOrAfter,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(downloadFullListOnOrAfter,"downloadFullListOnOrAfter")}
         % state - The state of this list.  0 = FullListing (A complete listing of all series. Make another request for full data at some point after timestamp in downloadFullListOnOrAfter.)  1 = UpToDate (The list contains all updates since the specified start date. Wait 15 minutes before making another request where timeStampForIfModifiedSince is used.)  2 = Incomplete (The list might not contain all updates. Wait one minute and then use the timeStampForIfModifiedSince in an a new request.) - type: DataPackageListState
-        state  { macrobond.JSONMapper.fieldName(state,"state") }
+        state  { macrobond.JSONMapper.fieldName(state,"state")}
         % entities - A list of entity names and timestamps when they were last modified. - type: array of EntityNameWithTimeStamp
-        entities macrobond.models.EntityNameWithTimeStamp { macrobond.JSONMapper.fieldName(entities,"entities"), macrobond.JSONMapper.JSONArray }
+        entities macrobond.models.EntityNameWithTimeStamp { macrobond.JSONMapper.fieldName(entities,"entities"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -29,14 +29,14 @@ classdef DataPackageListResponse < macrobond.JSONMapper
         % Constructor
         function obj = DataPackageListResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.DataPackageListResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

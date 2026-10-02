@@ -16,15 +16,15 @@ classdef EntityInfoForDisplayItem < macrobond.JSONMapper
     % Class properties
     properties
         % description - Description of the item - type: string
-        description string { macrobond.JSONMapper.fieldName(description,"description") }
+        description string { macrobond.JSONMapper.fieldName(description,"description")}
         % comment - The comment of the metadata value - type: string
-        comment string { macrobond.JSONMapper.fieldName(comment,"comment") }
+        comment string { macrobond.JSONMapper.fieldName(comment,"comment")}
         % valueType - The value type of the metadata attribute  3 = Int (32-bit signed integer)  5 = Double (64-bit IEEE floating point number)  7 = TimeStamp (A time stamp including date, time of day and time zone)  8 = String (A unicode string)  11 = Bool (A boolean value that can be true of false) - type: MetadataAttributeType
-        valueType  { macrobond.JSONMapper.fieldName(valueType,"valueType") }
+        valueType  { macrobond.JSONMapper.fieldName(valueType,"valueType")}
         % valueRestriction - Restriction on the value type  1 = Url (The string is an URL)  2 = Email (The string is an e-mail address)  3 = Date (Only the date of the TimeStamp is valid)  4 = Positive (The integer or double is >= 0)  5 = Json (The string is encoded as JSON) - type: MetadataAttributeTypeRestriction
-        valueRestriction  { macrobond.JSONMapper.fieldName(valueRestriction,"valueRestriction") }
+        valueRestriction  { macrobond.JSONMapper.fieldName(valueRestriction,"valueRestriction")}
         % value - type: EntityInfoForDisplayItem_value
-        value  { macrobond.JSONMapper.fieldName(value,"value") }
+        value  { macrobond.JSONMapper.fieldName(value,"value")}
     end
 
     % Class methods
@@ -32,14 +32,14 @@ classdef EntityInfoForDisplayItem < macrobond.JSONMapper
         % Constructor
         function obj = EntityInfoForDisplayItem(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.EntityInfoForDisplayItem
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

@@ -3,7 +3,7 @@ classdef SeriesWithRevisionsInfoResponse < macrobond.JSONMapper
 % 
 % SeriesWithRevisionsInfoResponse Properties:
 %   errorText - The error text if there was an error or not specified if there was no error - type: string
-%   errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
+%   errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  429 = QuotaExceeded (Quota exceeded)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
 %   storesRevisions - If True, a record of of updates of the series are stored - type: logical
 %   hasRevisions - If True, at least one update has been stored - type: logical
 %   timeStampOfFirstRevision - The timestamp of the first recorded update - type: datetime
@@ -18,19 +18,19 @@ classdef SeriesWithRevisionsInfoResponse < macrobond.JSONMapper
     % Class properties
     properties
         % errorText - The error text if there was an error or not specified if there was no error - type: string
-        errorText string { macrobond.JSONMapper.fieldName(errorText,"errorText") }
-        % errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
-        errorCode  { macrobond.JSONMapper.fieldName(errorCode,"errorCode") }
+        errorText string { macrobond.JSONMapper.fieldName(errorText,"errorText")}
+        % errorCode - Set if there was an error and not specified if there was no error  206 = PartialContent (The operation was successful, but only new revisions are included)  304 = NotModified (The item was not modified and is not included in the response)  403 = Forbidden (Access to the item was denied)  404 = NotFound (The item was not found)  429 = QuotaExceeded (Quota exceeded)  500 = Other (There was an error and it is described in the error text) - type: ResponseErrorCode
+        errorCode  { macrobond.JSONMapper.fieldName(errorCode,"errorCode")}
         % storesRevisions - If True, a record of of updates of the series are stored - type: logical
-        storesRevisions logical { macrobond.JSONMapper.fieldName(storesRevisions,"storesRevisions") }
+        storesRevisions logical { macrobond.JSONMapper.fieldName(storesRevisions,"storesRevisions")}
         % hasRevisions - If True, at least one update has been stored - type: logical
-        hasRevisions logical { macrobond.JSONMapper.fieldName(hasRevisions,"hasRevisions") }
+        hasRevisions logical { macrobond.JSONMapper.fieldName(hasRevisions,"hasRevisions")}
         % timeStampOfFirstRevision - The timestamp of the first recorded update - type: datetime
-        timeStampOfFirstRevision datetime { macrobond.JSONMapper.stringDatetime(timeStampOfFirstRevision,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampOfFirstRevision,"timeStampOfFirstRevision") }
+        timeStampOfFirstRevision datetime { macrobond.JSONMapper.stringDatetime(timeStampOfFirstRevision,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampOfFirstRevision,"timeStampOfFirstRevision")}
         % timeStampOfLastRevision - The timestamp of the last recorded update - type: datetime
-        timeStampOfLastRevision datetime { macrobond.JSONMapper.stringDatetime(timeStampOfLastRevision,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampOfLastRevision,"timeStampOfLastRevision") }
+        timeStampOfLastRevision datetime { macrobond.JSONMapper.stringDatetime(timeStampOfLastRevision,'yyyy-MM-dd''T''HH:mm:ss.SSSZ', 'TimeZone', 'local'), macrobond.JSONMapper.fieldName(timeStampOfLastRevision,"timeStampOfLastRevision")}
         % vintageTimeStamps - A list of timestamp of recorded updates - type: array of datetime
-        vintageTimeStamps datetime { macrobond.JSONMapper.fieldName(vintageTimeStamps,"vintageTimeStamps"), macrobond.JSONMapper.JSONArray }
+        vintageTimeStamps datetime { macrobond.JSONMapper.fieldName(vintageTimeStamps,"vintageTimeStamps"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -38,14 +38,14 @@ classdef SeriesWithRevisionsInfoResponse < macrobond.JSONMapper
         % Constructor
         function obj = SeriesWithRevisionsInfoResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesWithRevisionsInfoResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

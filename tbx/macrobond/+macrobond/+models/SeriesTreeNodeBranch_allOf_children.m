@@ -14,7 +14,7 @@ classdef SeriesTreeNodeBranch_allOf_children < macrobond.JSONMapper
     % Class properties
     properties
         % nodeType - The node type. Can be one of ''leaf'', ''branch'', ''branchref''. - type: string
-        nodeType string { macrobond.JSONMapper.fieldName(nodeType,"nodeType") }
+        nodeType string { macrobond.JSONMapper.fieldName(nodeType,"nodeType"), macrobond.JSONMapper.discriminator(nodeType,"branch","macrobond.models.SeriesTreeNodeBranch","branchref","macrobond.models.SeriesTreeNodeBranchRef","leaf","macrobond.models.SeriesTreeNodeLeaf","SeriesTreeNodeBranch","macrobond.models.SeriesTreeNodeBranch","SeriesTreeNodeBranchRef","macrobond.models.SeriesTreeNodeBranchRef","SeriesTreeNodeLeaf","macrobond.models.SeriesTreeNodeLeaf") }
         % title - The title of the tree node - type: string
         title string { macrobond.JSONMapper.fieldName(title,"title") }
         % children - The children of this branch - type: array of SeriesTreeNodeBranch_allOf_children
@@ -28,14 +28,14 @@ classdef SeriesTreeNodeBranch_allOf_children < macrobond.JSONMapper
         % Constructor
         function obj = SeriesTreeNodeBranch_allOf_children(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesTreeNodeBranch_allOf_children
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
 
         function out = getSpecificClass(obj)

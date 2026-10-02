@@ -12,7 +12,7 @@ classdef EntityInfoForDisplayResponse < macrobond.JSONMapper
     % Class properties
     properties
         % groups - A list of information groups - type: array of EntityInfoForDisplayGroup
-        groups macrobond.models.EntityInfoForDisplayGroup { macrobond.JSONMapper.fieldName(groups,"groups"), macrobond.JSONMapper.JSONArray }
+        groups macrobond.models.EntityInfoForDisplayGroup { macrobond.JSONMapper.fieldName(groups,"groups"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -20,14 +20,14 @@ classdef EntityInfoForDisplayResponse < macrobond.JSONMapper
         % Constructor
         function obj = EntityInfoForDisplayResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.EntityInfoForDisplayResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

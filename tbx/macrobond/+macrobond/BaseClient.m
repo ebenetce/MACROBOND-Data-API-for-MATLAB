@@ -67,7 +67,7 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
         % by calling the setCookies method on the cookies property. The cookie
         % jar is also saved to disk (cookies.mat in the same directory as 
         % BaseClient) and reloaded in new MATLAB sessions.
-        cookies = macrobond.CookieJar(fileparts(mfilename('fullpath')));
+        cookies = macrobond.CookieJar(fullfile(prefdir,'cookies','macrobond'));
     end
 
     methods

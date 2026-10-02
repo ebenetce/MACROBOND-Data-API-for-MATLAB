@@ -13,9 +13,9 @@ classdef ItemInformation < macrobond.JSONMapper
     % Class properties
     properties
         % title - The title of the item - type: string
-        title string { macrobond.JSONMapper.fieldName(title,"title") }
+        title string { macrobond.JSONMapper.fieldName(title,"title")}
         % path - The path of the item - type: string
-        path string { macrobond.JSONMapper.fieldName(path,"path") }
+        path string { macrobond.JSONMapper.fieldName(path,"path")}
     end
 
     % Class methods
@@ -23,14 +23,14 @@ classdef ItemInformation < macrobond.JSONMapper
         % Constructor
         function obj = ItemInformation(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.ItemInformation
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

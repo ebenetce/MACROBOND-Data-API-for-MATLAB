@@ -43,6 +43,7 @@ classdef Search < macrobond.BaseClient
     %   searchEntitiesPost - Search for time series and other entites
     %   searchEntitiesfordisplayPost - Search for time series and other entites and return formatted metadata
     %   searchFilterlistsGet - Get a list of saved filter lists
+    %   searchSearchsuggestionsGet - Suggest search phrase based on a search query
     %
     % See Also: matlab.net.http.HTTPOptions, matlab.net.http.Credentials, 
     %   CookieJar.setCookies, macrobond.BaseClient
@@ -211,7 +212,7 @@ classdef Search < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SearchResponse(response.Body.Data);
+                    result = macrobond.models.SearchResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 404
@@ -245,6 +246,7 @@ classdef Search < macrobond.BaseClient
             %       Optional properties in the model for this call:
             %           includeDiscontinued
             %           filters
+            %           suggestFilters
             %           noMetadata
             %           allowLongResult
             %
@@ -327,6 +329,7 @@ classdef Search < macrobond.BaseClient
             optionalProperties = [...
                 "includeDiscontinued",...
                 "filters",...
+                "suggestFilters",...
                 "noMetadata",...
                 "allowLongResult",...
             ];
@@ -360,7 +363,7 @@ classdef Search < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SearchResponse(response.Body.Data);
+                    result = macrobond.models.SearchResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 404
@@ -395,6 +398,7 @@ classdef Search < macrobond.BaseClient
             %       Optional properties in the model for this call:
             %           includeDiscontinued
             %           filters
+            %           suggestFilters
             %
             % No optional parameters
             %
@@ -476,6 +480,7 @@ classdef Search < macrobond.BaseClient
             optionalProperties = [...
                 "includeDiscontinued",...
                 "filters",...
+                "suggestFilters",...
             ];
             request.Body(1).Payload = SearchForDisplayRequest.getPayload(requiredProperties,optionalProperties);
 
@@ -507,7 +512,7 @@ classdef Search < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SearchForDisplayResponse(response.Body.Data);
+                    result = macrobond.models.SearchForDisplayResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 404
@@ -628,7 +633,7 @@ classdef Search < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.ItemListingResponse(response.Body.Data);
+                    result = macrobond.models.ItemListingResponse().fromJSON(response.Body.Data);
                 case 400
                     result = response.Body.Data;
                 case 401
@@ -649,6 +654,125 @@ classdef Search < macrobond.BaseClient
             end
         
         end % searchFilterlistsGet method
+
+        function [code, result, response] = searchSearchsuggestionsGet(obj, searchPhrase)
+            % searchSearchsuggestionsGet Suggest search phrase based on a search query
+            % Suggest one or more search phrases, that can be used for ''type ahead'', based on the specificed search query. You typically specify just a set of keywords. OAuth scope: macrobond_web_api.search_mb
+            %
+            % Required parameters:
+            %   searchPhrase - No description provided, Type: string
+            %
+            % No optional parameters
+            %
+            % Responses:
+            %   200: The operation was successful
+            %   400: Request failed
+            %   401: Unauthorized. Missing, invalid or expired access token.
+            %   403: Forbidden. Not authorized.
+            %   429: Too many requests. The maximum number of requests per day has been reached.
+            %
+            % Returns: Array of string
+            %
+            % See Also: macrobond.models.string
+
+            arguments
+              obj macrobond.api.Search
+              searchPhrase string
+            end
+
+            % Create the request object
+            request = matlab.net.http.RequestMessage();
+            
+            % Verify that operation supports returning JSON
+            specAcceptHeaders = [...
+                "application/json", ...
+            ];
+            if ismember("application/json",specAcceptHeaders)
+                request.Header(end+1) = matlab.net.http.field.AcceptField('application/json');
+            else
+                error("macrobond:api:searchSearchsuggestionsGet:UnsupportedMediaType","Generated OpenAPI Classes only support 'application/json' MediaType.\n" + ...
+                    "Operation '%s' does not support this. It may be possible to call this operation by first editing the generated code.","searchSearchsuggestionsGet")
+            end
+            
+            % No body input, so no need to check its content type
+            
+            % No header parameters
+
+            % Configure default httpOptions
+            httpOptions = obj.httpOptions;
+            % Never convert API response
+            httpOptions.ConvertResponse = false;
+
+            % Configure request verb/method
+            request.Method = matlab.net.http.RequestMethod('GET');
+
+            % Build the request URI
+            if ~isempty(obj.serverUri)
+                % If URI specified in object, use that
+                uri = obj.serverUri;
+            else
+                % If no server specified use base path from OpenAPI spec
+                uri = matlab.net.URI("https://api.macrobondfinancial.com");
+            end
+            % Append the operation end-point
+            uri.EncodedPath = uri.EncodedPath + "/v1/search/searchsuggestions";
+
+            % No path parameters
+
+            % Set query parameters
+            uri.Query(end+1) = matlab.net.QueryParameter("searchPhrase", searchPhrase);
+            
+            % No JSON body parameters
+
+            % No form body parameters
+
+            % Configure Authentication
+            authNames = [...
+                "ClientDirectAccess", ...
+                "auth", ...
+            ];  
+            [request, httpOptions, uri] = obj.requestAuth(authNames, request, httpOptions, uri);
+
+            % Add cookies if set
+            request = obj.applyCookies(request, uri);
+
+            % Call preSend
+            [request, httpOptions, uri] = obj.preSend("searchSearchsuggestionsGet", request, httpOptions, uri);
+
+            % Perform the request
+            [response, ~, history] = send(request, uri, httpOptions);
+
+            % Handle cookies if set
+            obj.setCookies(history);
+
+            % Call postSend
+            response = obj.postSend("searchSearchsuggestionsGet", response, request, uri, httpOptions);
+
+            % Handle response
+            code = response.StatusCode;
+            switch (code)
+                case 200
+                    result = response.Body.Data;
+                case 400
+                    result = response.Body.Data;
+                case 401
+                    result = response.Body.Data;
+                case 403
+                    result = response.Body.Data;
+                case 429
+                    result = response.Body.Data;
+                otherwise % Unexpected output, not declared in spec
+                    % Any response in the OK range will not throw a warning
+                    if (int32(response.StatusCode) < 200 || int32(response.StatusCode) >= 300)
+                        % Others will throw a warning
+                        warning("macrobond:api:searchSearchsuggestionsGet:UndocumentedResponse","Operation '%s' returned an undocumented response code '%d'.\n" + ...
+                            "Response Body is returned as raw data.","searchSearchsuggestionsGet",code);
+                    end
+                    % Return the raw body data
+                    result = response.Body.Data;
+            end
+        
+        end % searchSearchsuggestionsGet method
 
     end %methods
 end %class

@@ -177,7 +177,7 @@ classdef SubscriptionList < macrobond.BaseClient
             ];
             optionalProperties = [...
             ];
-            request.Body(1).Payload = request_body.getPayload(requiredProperties,optionalProperties);
+            request.Body(1).Payload = request_body.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 
@@ -312,7 +312,7 @@ classdef SubscriptionList < macrobond.BaseClient
             ];
             optionalProperties = [...
             ];
-            request.Body(1).Payload = request_body.getPayload(requiredProperties,optionalProperties);
+            request.Body(1).Payload = request_body.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 
@@ -458,7 +458,7 @@ classdef SubscriptionList < macrobond.BaseClient
             code = response.StatusCode;
             switch (code)
                 case 200
-                    result = macrobond.models.SubscriptionListUpdatesResponse(response.Body.Data);
+                    result = macrobond.models.SubscriptionListUpdatesResponse().fromJSON(response.Body.Data);
                 case 401
                     result = response.Body.Data;
                 case 403
@@ -668,7 +668,7 @@ classdef SubscriptionList < macrobond.BaseClient
             ];
             optionalProperties = [...
             ];
-            request.Body(1).Payload = request_body.getPayload(requiredProperties,optionalProperties);
+            request.Body(1).Payload = request_body.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 
@@ -795,7 +795,7 @@ classdef SubscriptionList < macrobond.BaseClient
             ];
             optionalProperties = [...
             ];
-            request.Body(1).Payload = request_body.getPayload(requiredProperties,optionalProperties);
+            request.Body(1).Payload = request_body.getArrayPayload(requiredProperties,optionalProperties);
 
             % No form body parameters
 

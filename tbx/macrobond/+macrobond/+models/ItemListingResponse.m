@@ -14,11 +14,11 @@ classdef ItemListingResponse < macrobond.JSONMapper
     % Class properties
     properties
         % title - The title of the directory - type: string
-        title string { macrobond.JSONMapper.fieldName(title,"title") }
+        title string { macrobond.JSONMapper.fieldName(title,"title")}
         % directories - The list of sub directories if any. - type: array of ItemListingResponse
-        directories macrobond.models.ItemListingResponse { macrobond.JSONMapper.fieldName(directories,"directories"), macrobond.JSONMapper.JSONArray }
+        directories macrobond.models.ItemListingResponse { macrobond.JSONMapper.fieldName(directories,"directories"), macrobond.JSONMapper.JSONArray}
         % items - The list of if any. - type: array of ItemInformation
-        items macrobond.models.ItemInformation { macrobond.JSONMapper.fieldName(items,"items"), macrobond.JSONMapper.JSONArray }
+        items macrobond.models.ItemInformation { macrobond.JSONMapper.fieldName(items,"items"), macrobond.JSONMapper.JSONArray}
     end
 
     % Class methods
@@ -26,14 +26,14 @@ classdef ItemListingResponse < macrobond.JSONMapper
         % Constructor
         function obj = ItemListingResponse(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.ItemListingResponse
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class

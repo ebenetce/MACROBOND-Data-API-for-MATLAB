@@ -16,15 +16,15 @@ classdef SeriesRequest < macrobond.JSONMapper
     % Class properties
     properties
         % values - The values of the series. - type: array of double
-        values double { macrobond.JSONMapper.fieldName(values,"values"), macrobond.JSONMapper.JSONArray }
+        values double { macrobond.JSONMapper.fieldName(values,"values"), macrobond.JSONMapper.JSONArray}
         % dates - The dates of the series or not specified if deducted from metadata. When included, it must be the same length as the list of Values. - type: array of datetime
-        dates datetime { macrobond.JSONMapper.fieldName(dates,"dates"), macrobond.JSONMapper.JSONArray }
+        dates datetime { macrobond.JSONMapper.fieldName(dates,"dates"), macrobond.JSONMapper.JSONArray}
         % forecastFlags - An optional array of forecast flags. When included, it must be the same length as the list of Values. - type: array of logical
-        forecastFlags logical { macrobond.JSONMapper.fieldName(forecastFlags,"forecastFlags"), macrobond.JSONMapper.JSONArray }
+        forecastFlags logical { macrobond.JSONMapper.fieldName(forecastFlags,"forecastFlags"), macrobond.JSONMapper.JSONArray}
         % metadata - The metadata. - type: macrobond.JSONMapperMap
-        metadata  { macrobond.JSONMapper.fieldName(metadata,"metadata") }
+        metadata  { macrobond.JSONMapper.fieldName(metadata,"metadata")}
         % metadataBaseSeries - An optional existing series to inherit metadata from. - type: string
-        metadataBaseSeries string { macrobond.JSONMapper.fieldName(metadataBaseSeries,"metadataBaseSeries") }
+        metadataBaseSeries string { macrobond.JSONMapper.fieldName(metadataBaseSeries,"metadataBaseSeries")}
     end
 
     % Class methods
@@ -32,14 +32,14 @@ classdef SeriesRequest < macrobond.JSONMapper
         % Constructor
         function obj = SeriesRequest(s,inputs)
             % To allow proper nesting of object, derived objects must
-            % call the JSONMapper constructor from their constructor. This 
+            % call the initialize method from their constructor. This 
             % also allows objects to be instantiated with Name-Value pairs
             % as inputs to set properties to specified values.
             arguments
                 s { macrobond.JSONMapper.ConstructorArgument } = []
                 inputs.?macrobond.models.SeriesRequest
             end
-            obj@macrobond.JSONMapper(s,inputs);
+            obj = obj.initialize(s,inputs);
         end
     end %methods
 end %class
