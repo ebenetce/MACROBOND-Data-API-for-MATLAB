@@ -1,0 +1,6 @@
+name = "MACROBOND Data API"
+
+[folders]
+path = [
+    "tbx/macrobond",
+]
