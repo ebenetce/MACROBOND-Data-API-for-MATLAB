@@ -115,7 +115,7 @@ classdef SubscriptionList < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: 
             %
@@ -241,7 +241,7 @@ classdef SubscriptionList < macrobond.BaseClient
             %   200: The operation was successful and the answer contains the names not in the list
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of string
             %
@@ -373,7 +373,7 @@ classdef SubscriptionList < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: SubscriptionListUpdatesResponse
             %
@@ -487,7 +487,7 @@ classdef SubscriptionList < macrobond.BaseClient
             %   200: The operation was successful and the answer contains the names in the list
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of string
             %
@@ -602,7 +602,7 @@ classdef SubscriptionList < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: 
             %
@@ -728,7 +728,7 @@ classdef SubscriptionList < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: 
             %

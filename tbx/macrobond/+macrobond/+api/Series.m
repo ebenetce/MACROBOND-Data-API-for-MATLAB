@@ -123,7 +123,7 @@ classdef Series < macrobond.BaseClient
             %   404: The series could not be found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: EntityInfoForDisplayResponse
             %
@@ -250,7 +250,7 @@ classdef Series < macrobond.BaseClient
             %   404: The series could not be found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of VintageSeriesResponse
             %
@@ -384,7 +384,7 @@ classdef Series < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of SeriesWithVintagesResponse
             %
@@ -519,7 +519,7 @@ classdef Series < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of EntityResponse
             %
@@ -639,7 +639,7 @@ classdef Series < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of EntityResponse
             %
@@ -776,7 +776,7 @@ classdef Series < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of SeriesWithTimesOfChangeResponse
             %
@@ -900,7 +900,7 @@ classdef Series < macrobond.BaseClient
             %   404: The series could not be found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of SeriesObservationHistoryResponse
             %
@@ -1023,7 +1023,7 @@ classdef Series < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of SeriesResponse
             %
@@ -1145,7 +1145,7 @@ classdef Series < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of SeriesResponse
             %
@@ -1292,7 +1292,7 @@ classdef Series < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: UnifiedSeriesResponse
             %
@@ -1439,7 +1439,7 @@ classdef Series < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of VintageSeriesResponse
             %
@@ -1560,7 +1560,7 @@ classdef Series < macrobond.BaseClient
             %   200: The operation was successful
             %   403: The account is not set up to use a subscription list
             %   401: Unauthorized. Missing, invalid or expired access token.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: DataPackageListResponse
             %
@@ -1675,7 +1675,7 @@ classdef Series < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of SeriesWithRevisionsInfoResponse
             %
@@ -1789,7 +1789,7 @@ classdef Series < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: GetUsageStatisticsResponse
             %

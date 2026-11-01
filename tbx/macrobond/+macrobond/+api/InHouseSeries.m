@@ -113,7 +113,7 @@ classdef InHouseSeries < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: 
             %
@@ -232,7 +232,7 @@ classdef InHouseSeries < macrobond.BaseClient
             %   400: The operation failed
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: 
             %
@@ -362,7 +362,7 @@ classdef InHouseSeries < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of SeriesStorageLocationResponse
             %
@@ -474,7 +474,7 @@ classdef InHouseSeries < macrobond.BaseClient
             %   200: The operation was successful
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of string
             %

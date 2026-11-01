@@ -35,6 +35,7 @@
 +macrobond/+models/ReleaseEventItemKind.m
 +macrobond/+models/ResponseErrorCode.m
 +macrobond/+models/RevisionHistoryRequest.m
++macrobond/+models/RevisionValuesResponse.m
 +macrobond/+models/SearchFilter.m
 +macrobond/+models/SearchForDisplayRequest.m
 +macrobond/+models/SearchForDisplayResponse.m
@@ -63,6 +64,7 @@
 +macrobond/+models/SeriesWithRevisionsInfoResponse.m
 +macrobond/+models/SeriesWithTimesOfChangeResponse.m
 +macrobond/+models/SeriesWithVintagesResponse.m
++macrobond/+models/SeriesWithVintagesResponse_vintages_inner.m
 +macrobond/+models/SubscriptionListUpdatesResponse.m
 +macrobond/+models/UnifiedSeriesEntry.m
 +macrobond/+models/UnifiedSeriesRequest.m

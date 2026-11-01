@@ -111,7 +111,7 @@ classdef Metadata < macrobond.BaseClient
             %   404: At least one attribute was not found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of MetadataAttributeInformationResponse
             %
@@ -230,7 +230,7 @@ classdef Metadata < macrobond.BaseClient
             %   404: At least one attribute or value was not found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of MetadataValueInformationResponse
             %
@@ -351,7 +351,7 @@ classdef Metadata < macrobond.BaseClient
             %   404: The attribute was not found
             %   401: Unauthorized. Missing, invalid or expired access token.
             %   403: Forbidden. Not authorized.
-            %   429: Too many requests. The maximum number of requests per day has been reached or the number of concurrent requests has been exceeded.
+            %   429: Too many requests. The maximum number of requests per time period has been reached or the number of concurrent requests has been exceeded. The Retry-After header might indicate how long to wait before making a new request.
             %
             % Returns: Array of MetadataValueInformationResponse
             %
